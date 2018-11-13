@@ -1,37 +1,15 @@
-<div>
-    <h2 *ngIf="account">Active sessions for [<b>{{account.login}}</b>]</h2>
+<div class="table-responsive" >
+    <h2>Search for product</h2>
 
-    <div class="alert alert-success" *ngIf="success">
-        <strong>Session invalidated!</strong>
-    </div>
-    <div class="alert alert-danger" *ngIf="error">
-        <strong>An error has occured!</strong> The session could not be invalidated.
-    </div>
+    <span>Filter</span><br>
+    <input type="text" class="form-control" (keyup)="search($event.target.value)" id="search-box" placeholder="Search e.g. raw"/>
+    <ul *ngIf="foods$ as foods; else noData">
+        <li *ngFor="let food of foods | async" (click)="onModal(food.id)">
+            <span class="badge">{{food.name}}</span> {{food.id}}
+        </li>
+    </ul><br>
+    <ng-template #noData>No Data Available</ng-template>
 
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>IP Address</th>
-                    <th>User agent</th>
-                    <th>Date</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let session of sessions">
-                    <td>{{session.ipAddress}}</td>
-                    <td>{{session.userAgent}}</td>
-                    <td>{{session.tokenDate | date:'longDate'}}</td>
-                    <td>
-                        <button type="submit"
-                                class="btn btn-primary"
-                                (click)="invalidate(session.series)">
-                                 Invalidate
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+
+</div>
 </div>

@@ -3,8 +3,12 @@ package com.marianna.engindiet.service;
 import com.marianna.engindiet.config.Constants;
 import com.marianna.engindiet.domain.Authority;
 import com.marianna.engindiet.domain.User;
+import com.marianna.engindiet.domain.UserExtra;
+import com.marianna.engindiet.domain.enumeration.DIETMODE;
+import com.marianna.engindiet.domain.enumeration.STYLE;
 import com.marianna.engindiet.repository.AuthorityRepository;
 import com.marianna.engindiet.repository.PersistentTokenRepository;
+import com.marianna.engindiet.repository.UserExtraRepository;
 import com.marianna.engindiet.repository.UserRepository;
 import com.marianna.engindiet.security.AuthoritiesConstants;
 import com.marianna.engindiet.security.SecurityUtils;
@@ -46,13 +50,16 @@ public class UserService {
     private final AuthorityRepository authorityRepository;
 
     private final CacheManager cacheManager;
+    /* dunno */
+    private UserExtraRepository userExtraRepository;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, PersistentTokenRepository persistentTokenRepository, AuthorityRepository authorityRepository, CacheManager cacheManager) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, PersistentTokenRepository persistentTokenRepository, AuthorityRepository authorityRepository, CacheManager cacheManager,UserExtraRepository userExtraRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.persistentTokenRepository = persistentTokenRepository;
         this.authorityRepository = authorityRepository;
         this.cacheManager = cacheManager;
+        this.userExtraRepository = userExtraRepository;
     }
 
     public Optional<User> activateRegistration(String key) {
@@ -92,7 +99,7 @@ public class UserService {
             });
     }
 
-    public User registerUser(UserDTO userDTO, String password) {
+    public User registerUser(UserDTO userDTO, String password, Integer weight, Integer height, STYLE lifestyle, DIETMODE dietMode) {
         userRepository.findOneByLogin(userDTO.getLogin().toLowerCase()).ifPresent(existingUser -> {
             boolean removed = removeNonActivatedUser(existingUser);
             if (!removed) {
@@ -125,6 +132,16 @@ public class UserService {
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
+
+        UserExtra newUserExtra = new UserExtra();
+        newUserExtra.setUser(newUser);
+        newUserExtra.setWeight(weight);
+        newUserExtra.setHeight(height);
+        newUserExtra.setLifestyle(lifestyle);
+        newUserExtra.setDietMode(dietMode);
+        log.debug("Before saving new extra user info ... ... ") ;
+        userExtraRepository.save(newUserExtra);
+        log.debug("Created Information for UserExtra: {}", newUserExtra);
         return newUser;
     }
     private boolean removeNonActivatedUser(User existingUser){
@@ -165,6 +182,16 @@ public class UserService {
         userRepository.save(user);
         this.clearUserCaches(user);
         log.debug("Created Information for User: {}", user);
+
+       /* UserExtra newUserExtra = new UserExtra();
+        newUserExtra.setUser(user);
+        newUserExtra.setWeight(weight);
+        newUserExtra.setHeight(height);
+        newUserExtra.setLifestyle(lifestyle);
+        newUserExtra.setDietMode(dietMode);
+        log.debug("Before saving new extra user info ... ... ") ;
+        userExtraRepository.save(newUserExtra);
+        log.debug("Created Information for UserExtra: {}", newUserExtra);*/
         return user;
     }
 
@@ -263,7 +290,7 @@ public class UserService {
         return userRepository.findOneWithAuthoritiesById(id);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Optional<User> getUserWithAuthorities() {
         return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithAuthoritiesByLogin);
     }

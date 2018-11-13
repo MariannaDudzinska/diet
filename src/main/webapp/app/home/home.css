@@ -6,8 +6,24 @@ Main page styles
     display: inline-block;
     width: 347px;
     height: 497px;
-    background: url('../../content/images/hipster.png') no-repeat center top;
-    background-size: contain;
+    background: url('../assets/img/img2.jpg') no-repeat center top;
+    background-size: cover;
+}
+
+.homeBackground {
+    display: flex;
+    width: 900px;
+    height: 497px;
+    background: url('../assets/img/back4.jpg') center top;
+    background-size: cover;
+}
+
+.profilePic {
+    display: inline-block;
+    width: 347px;
+    height: 497px;
+    background: url('../assets/img/img.png') no-repeat center top;
+    background-size: cover;
 }
 
 /* wait autoprefixer update to allow simple generation of high pixel density media query */
@@ -17,7 +33,7 @@ Main page styles
     only screen and (min-resolution: 192dpi),
     only screen and (min-resolution: 2dppx) {
     .hipster {
-        background: url('../../content/images/hipster2x.png') no-repeat center top;
+        background: url('../assets/img/bg5.jpg') no-repeat center top;
         background-size: contain;
     }
 }

@@ -1,0 +1,60 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "usersWeight",
+            "otherEntityName": "usersWeight",
+            "otherEntityRelationshipName": "userExtra"
+        },
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "one-to-one",
+            "relationshipValidateRules": [],
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "userExtra"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "weight",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "height",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "lifestyle",
+            "fieldType": "STYLE",
+            "fieldValues": "SITTING,AVERAGE,ACTIVE",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "dietMode",
+            "fieldType": "DIETMODE",
+            "fieldValues": "BALANCED,LOSE,GAIN",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20181112221828",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "user_extra",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}

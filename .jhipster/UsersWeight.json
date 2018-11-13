@@ -1,0 +1,41 @@
+{
+    "name": "UsersWeight",
+    "fields": [
+        {
+            "fieldName": "dateOfLog",
+            "fieldType": "LocalDate",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "valueInKg",
+            "fieldType": "Integer",
+            "fieldValidateRules": [
+                "required",
+                "min",
+                "max"
+            ],
+            "fieldValidateRulesMin": 30,
+            "fieldValidateRulesMax": 400
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": "required",
+            "relationshipName": "userExtra",
+            "otherEntityName": "userExtra",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20181112221829",
+    "entityTableName": "users_weight",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": "*"
+}

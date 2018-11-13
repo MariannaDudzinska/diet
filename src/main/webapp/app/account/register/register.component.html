@@ -50,6 +50,54 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="form-control-label" for="weight">Weight</label>
+                    <input type="text" class="form-control" [(ngModel)]="registerAccount.weight" id="weight" name="weight" #weight="ngModel" placeholder="Weight in kg e.g. 85"
+                           required min="40" max="400" >
+                    <!--<div *ngIf="weight.dirty && weight.invalid">
+                        <small class="form-text text-danger" *ngIf="weight.errors.required">
+                            Your username is required.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="weight.errors.min"
+                        >
+                            Your username is required to be at least 1 character.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="weight.errors.max"
+                        >
+                            Your username cannot be longer than 50 characters.
+                        </small>
+                    </div>-->
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="height">Height</label>
+                    <input type="text" class="form-control" [(ngModel)]="registerAccount.height" id="height" name="height" #height="ngModel" placeholder="Height in cm e.g. 167"
+                           required min="100" max="300" >
+                    <!--<div *ngIf="height.dirty && height.invalid">
+                        <small class="form-text text-danger" *ngIf="height.errors.required">
+                            Your username is required.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="height.errors.min"
+                        >
+                            Your username is required to be at least 1 character.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="height.errors.max"
+                        >
+                            Your username cannot be longer than 50 characters.
+                        </small>
+                    </div>-->
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" >Lifestyle</label>
+                    <select class="form-control" id="lifestyle" required [(ngModel)]="registerAccount.lifestyle" name="lifestyle">
+                        <option *ngFor="let lifestyle of lifestyleValues" [value]="lifestyle"  required>{{lifestyle}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label"  >Diet Mode</label>
+                    <select class="form-control" id="dietmode" required [(ngModel)]="registerAccount.dietMode" name="dietMode">
+                        <option *ngFor="let mode of modeVALS" [value]="mode" required>{{mode}}</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label class="form-control-label" for="email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" #email="ngModel" placeholder="Your email"
                             [(ngModel)]="registerAccount.email" minlength=5 maxlength=254 email required>
@@ -115,10 +163,6 @@
                 <button type="submit" [disabled]="registerForm.form.invalid" class="btn btn-primary">Register</button>
             </form>
             <p></p>
-            <div class="alert alert-warning">
-                <span>If you want to </span>
-                <a class="alert-link" (click)="openLogin()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
-            </div>
         </div>
     </div>
 </div>

@@ -1,0 +1,76 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-users-weight-heading">Create or edit a Users Weight</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!usersWeight.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="usersWeight.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_dateOfLog">Date Of Log</label>
+                    <div class="input-group">
+                        <input id="field_dateOfLog" type="text" class="form-control" name="dateOfLog" ngbDatepicker  #dateOfLogDp="ngbDatepicker" [(ngModel)]="usersWeight.dateOfLog"
+                        required/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dateOfLogDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div [hidden]="!(editForm.controls.dateOfLog?.dirty && editForm.controls.dateOfLog?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.dateOfLog?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_valueInKg">Value In Kg</label>
+                    <input type="number" class="form-control" name="valueInKg" id="field_valueInKg"
+                        [(ngModel)]="usersWeight.valueInKg" required min="30" jhiMin="30" max="400" jhiMax="400"/>
+                    <div [hidden]="!(editForm.controls.valueInKg?.dirty && editForm.controls.valueInKg?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.valueInKg?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.valueInKg?.errors?.min">
+                            This field should be at least 30.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.valueInKg?.errors?.max">
+                            This field cannot be more than 400.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.valueInKg?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_userExtra">User Extra</label>
+                    <select class="form-control" id="field_userExtra" name="userExtra" [(ngModel)]="usersWeight.userExtra"  required>
+                        <option *ngIf="!editForm.value.userExtra" [ngValue]="null" selected></option>
+                        <option [ngValue]="userExtraOption.id === usersWeight.userExtra?.id ? usersWeight.userExtra : userExtraOption" *ngFor="let userExtraOption of userextras; trackBy: trackUserExtraById">{{userExtraOption.id}}</option>
+                    </select>
+                </div>
+                <div [hidden]="!(editForm.controls.userExtra?.dirty && editForm.controls.userExtra?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.userExtra?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

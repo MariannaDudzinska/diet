@@ -203,6 +203,11 @@
             <artifactId>metrics-spring</artifactId>
         </dependency>
         <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
         </dependency>
@@ -560,8 +565,8 @@
                         <changeLogFile>src/main/resources/config/liquibase/master.xml</changeLogFile>
                         <diffChangeLogFile>src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml</diffChangeLogFile>
                         <driver>com.mysql.jdbc.Driver</driver>
-                        <url>jdbc:mysql://localhost:3306/enginDiet</url>
-                        <defaultSchemaName>enginDiet</defaultSchemaName>
+                        <url>jdbc:mysql://localhost:3306/engindiet</url>
+                        <defaultSchemaName>engindiet</defaultSchemaName>
                         <username>root</username>
                         <password></password>
                         <referenceUrl>hibernate:spring:com.marianna.engindiet.domain?dialect=org.hibernate.dialect.MySQL5InnoDBDialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy</referenceUrl>

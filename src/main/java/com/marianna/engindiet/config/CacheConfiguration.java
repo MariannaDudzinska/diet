@@ -40,6 +40,9 @@ public class CacheConfiguration {
             cm.createCache(com.marianna.engindiet.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             cm.createCache(com.marianna.engindiet.domain.PersistentToken.class.getName(), jcacheConfiguration);
             cm.createCache(com.marianna.engindiet.domain.User.class.getName() + ".persistentTokens", jcacheConfiguration);
+            cm.createCache(com.marianna.engindiet.domain.UserExtra.class.getName(), jcacheConfiguration);
+            cm.createCache(com.marianna.engindiet.domain.UserExtra.class.getName() + ".usersWeights", jcacheConfiguration);
+            cm.createCache(com.marianna.engindiet.domain.UsersWeight.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

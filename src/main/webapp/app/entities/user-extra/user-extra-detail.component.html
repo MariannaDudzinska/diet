@@ -1,0 +1,43 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="userExtra">
+            <h2><span>User Extra</span> {{userExtra.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Weight</span></dt>
+                <dd>
+                    <span>{{userExtra.weight}}</span>
+                </dd>
+                <dt><span>Height</span></dt>
+                <dd>
+                    <span>{{userExtra.height}}</span>
+                </dd>
+                <dt><span>Lifestyle</span></dt>
+                <dd>
+                    <span>{{userExtra.lifestyle}}</span>
+                </dd>
+                <dt><span>Diet Mode</span></dt>
+                <dd>
+                    <span>{{userExtra.dietMode}}</span>
+                </dd>
+                <dt><span>User</span></dt>
+                <dd>
+                    {{userExtra.user?.login}}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/user-extra', userExtra.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

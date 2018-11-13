@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Principal, AccountService } from 'app/core';
+import { DIETMODE, STYLE } from 'app/shared/model/user-extra.model';
 
 @Component({
     selector: 'jhi-settings',
@@ -11,6 +12,8 @@ export class SettingsComponent implements OnInit {
     success: string;
     settingsAccount: any;
     languages: any[];
+    modeVALS = Object.keys(DIETMODE);
+    lifestyleValues = Object.keys(STYLE).filter(k => typeof STYLE[k as any] === 'string'); //
 
     constructor(private account: AccountService, private principal: Principal) {}
 
@@ -44,7 +47,9 @@ export class SettingsComponent implements OnInit {
             langKey: account.langKey,
             lastName: account.lastName,
             login: account.login,
-            imageUrl: account.imageUrl
+            imageUrl: account.imageUrl,
+            lifestyle: account.lifestyle,
+            dietMode: account.dietMode
         };
     }
 }

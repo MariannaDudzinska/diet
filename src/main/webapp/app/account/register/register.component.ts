@@ -5,6 +5,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EMAIL_ALREADY_USED_TYPE, LOGIN_ALREADY_USED_TYPE } from 'app/shared';
 import { LoginModalService } from 'app/core';
 import { Register } from './register.service';
+import { DIETMODE, STYLE } from 'app/shared/model/user-extra.model';
 
 @Component({
     selector: 'jhi-register',
@@ -19,6 +20,14 @@ export class RegisterComponent implements OnInit, AfterViewInit {
     registerAccount: any;
     success: boolean;
     modalRef: NgbModalRef;
+    lifestyleVALS = Object.keys(STYLE);
+    modeVALS = Object.keys(DIETMODE);
+    lifestyleValues = Object.keys(STYLE).filter(k => typeof STYLE[k as any] === 'string'); //
+    lifestyleValues2 = this.lifestyleValues.map(k => STYLE[k as any]);
+    /* lifestyles = ['Sitting', 'Average', 'Active'];
+    default = 'Average';
+    dietModes = ['Balanced', 'Lose', 'Gain'];
+    defaultMode = 'Balanced';*/
 
     constructor(
         private loginModalService: LoginModalService,
