@@ -9,7 +9,7 @@ import { IUsersWeight } from 'app/shared/model/users-weight.model';
 import { UsersWeightService } from './users-weight.service';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { UserExtraResolve, UserExtraService } from 'app/entities/user-extra';
-import { IUser, UserService } from 'app/core';
+import { AccountService, IUser, Principal, UserService } from 'app/core';
 
 @Component({
     selector: 'jhi-users-weight-update',
@@ -28,7 +28,9 @@ export class UsersWeightUpdateComponent implements OnInit {
         private usersWeightService: UsersWeightService,
         private userExtraService: UserExtraService,
         private userService: UserService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
+        private account: AccountService,
+        private principal: Principal
     ) {}
 
     ngOnInit() {
@@ -48,6 +50,9 @@ export class UsersWeightUpdateComponent implements OnInit {
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
+        this.principal.identity().then(account => {
+            this.currentUser = account;
+        });
     }
 
     previousState() {

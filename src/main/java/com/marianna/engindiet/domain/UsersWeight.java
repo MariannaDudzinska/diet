@@ -39,6 +39,7 @@ public class UsersWeight implements Serializable {
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties("usersWeights")
+    @JoinColumn(name = "user_extra_id")
     private UserExtra userExtra;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
