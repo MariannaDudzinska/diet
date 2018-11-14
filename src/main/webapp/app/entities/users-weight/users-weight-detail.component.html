@@ -1,13 +1,13 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="usersWeight">
-            <h2><span>Users Weight</span> {{usersWeight.id}}</h2>
+            <h2><span>My weight log</span></h2>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
                 <dt><span>Date Of Log</span></dt>
                 <dd>
-                    <span>{{usersWeight.dateOfLog}}</span>
+                    <span>{{usersWeight.dateOfLog | date:'mediumDate' }}</span>
                 </dd>
                 <dt><span>Value In Kg</span></dt>
                 <dd>

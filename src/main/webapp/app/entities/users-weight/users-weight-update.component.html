@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-users-weight-heading">Create or edit a Users Weight</h2>
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" *ngIf="currentUser">
+            <h2 id="jhi-users-weight-heading">Weight Log {{currentUser.id}}</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
                 <div class="form-group" [hidden]="!usersWeight.id">
@@ -49,18 +49,17 @@
                     </div>
                 </div>
 
-<!--                <div class="form-group">
-                    <label class="form-control-label" for="field_userExtra">User Extra</label>
-                    <select class="form-control" id="field_userExtra" name="userExtra" [(ngModel)]="usersWeight.userExtra"  required>
-                        <option *ngIf="!editForm.value.userExtra" [ngValue]="null" selected></option>
-                        <option [ngValue]="userExtraOption.id === usersWeight.userExtra?.id ? usersWeight.userExtra : userExtraOption" *ngFor="let userExtraOption of userextras; trackBy: trackUserExtraById">{{userExtraOption.id}}</option>
-                    </select>
-                </div>-->
-
-                <div class="form-group" *ngIf="currentUser">
-                    <label for="id">ID</label>
-                    <input type="text" class="form-control" id="uxField" name="uxField"
-                           [(ngModel)]="currentUser.id" readonly />
+                <div class="form-group">
+                <label class="form-control-label" for="field_userExtra">User Extra</label>
+                <select class="form-control" id="field_userExtra" name="userExtra" [(ngModel)]="usersWeight.userExtra"  required>
+                    <option *ngIf="!editForm.value.userExtra" [ngValue]="null" selected></option>
+                    <option [ngValue]="userExtraOption.id === usersWeight.userExtra?.id ? usersWeight.userExtra : userExtraOption" *ngFor="let userExtraOption of userextras; trackBy: trackUserExtraById">{{userExtraOption.id}}</option>
+                </select>
+            </div>
+                <div class="form-group" *ngIf="usersWeight.userExtra">
+                    <label class="form-control-label" for="userExtra" >User ID</label>
+                    <input type="text" class="form-control" id="userExtra" name="userExtra"
+                           [(ngModel)]="usersWeight.userExtra" readonly /> {{usersWeight.userExtra?.id}}
                 </div>
                 <div [hidden]="!(editForm.controls.userExtra?.dirty && editForm.controls.userExtra?.invalid)">
                     <small class="form-text text-danger"
