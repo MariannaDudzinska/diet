@@ -59,7 +59,7 @@
                 <div class="form-group" *ngIf="usersWeight.userExtra">
                     <label class="form-control-label" for="userExtra" >User ID</label>
                     <input type="text" class="form-control" id="userExtra" name="userExtra"
-                           [(ngModel)]="usersWeight.userExtra" readonly /> {{usersWeight.userExtra?.id}}
+                           [(ngModel)]="usersWeight.userExtra.id" readonly /> {{usersWeight.userExtra?.id}}
                 </div>
                 <div [hidden]="!(editForm.controls.userExtra?.dirty && editForm.controls.userExtra?.invalid)">
                     <small class="form-text text-danger"

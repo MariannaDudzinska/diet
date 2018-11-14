@@ -14,23 +14,24 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th><span>ID</span></th>
+            <!--<th><span>ID</span></th>-->
             <th><span>Date Of Log</span></th>
-            <th><span>Value In Kg</span></th>
-            <th><span>User Extra</span></th>
+            <th><span>Weight in kilograms</span></th>
+            <!--<th><span>User Extra</span></th>-->
             <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let usersWeight of usersWeights ;trackBy: trackId">
-                <td><a [routerLink]="['/users-weight', usersWeight.id, 'view' ]">{{usersWeight.id}}</a></td>
+            <ng-container *ngFor="let usersWeight of usersWeights | orderBy: 'dateOfLog': true ;trackBy: trackId">
+            <tr *ngIf="currentAccount.id === usersWeight.userExtra?.id">
+                <!--<td><a [routerLink]="['/users-weight', usersWeight.id, 'view' ]">{{usersWeight.id}}</a></td>-->
                 <td>{{usersWeight.dateOfLog | date:'mediumDate'}}</td>
                 <td>{{usersWeight.valueInKg}}</td>
-                <td>
+               <!-- <td>
                     <div *ngIf="usersWeight.userExtra">
                         <a [routerLink]="['../user-extra', usersWeight.userExtra?.id, 'view' ]" >{{usersWeight.userExtra?.id}}</a>
                     </div>
-                </td>
+                </td>-->
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
@@ -56,6 +57,7 @@
                     </div>
                 </td>
             </tr>
+            </ng-container>
             </tbody>
         </table>
     </div>

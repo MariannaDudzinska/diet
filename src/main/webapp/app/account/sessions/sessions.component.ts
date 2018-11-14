@@ -36,8 +36,9 @@ export class SessionsComponent implements OnInit {
         );
     }
 
-    onModal(id) {
+    onModal(id, name: String) {
         this.fetchedFood$ = this.logsService.fetchFood(id);
+        // this.modalService.open(name);
         return this.fetchedFood$;
     }
 
@@ -45,7 +46,6 @@ export class SessionsComponent implements OnInit {
 
     /* NIEWAŻNE póki co*/
     /*  this.logsService.getFoodList().subscribe(response => (this.foodList = response));
-  console.log('du[a');
   console.log(JSON.stringify(this.response, null, '    '));
   console.log(this.foodList);
   /*

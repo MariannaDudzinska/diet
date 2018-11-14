@@ -32,6 +32,15 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
         );
     }
 
+    loadThisUsers() {
+        this.usersWeightService.query().subscribe(
+            (res: HttpResponse<IUsersWeight[]>) => {
+                this.usersWeights = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+    }
+
     ngOnInit() {
         this.loadAll();
         this.principal.identity().then(account => {
