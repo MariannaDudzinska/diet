@@ -1,6 +1,7 @@
 <div>
     <h2 id="page-heading">
         <span>My Weight Logs</span>
+        <canvas id="lineCharts" style="width:40%;"></canvas>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-users-weight" [routerLink]="['/users-weight/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
@@ -57,8 +58,16 @@
                     </div>
                 </td>
             </tr>
+                <br>
             </ng-container>
             </tbody>
         </table>
     </div>
+   <!-- <div *ngIf="usersWeights">
+        <ng-container  *ngFor="let usersWeight of usersWeights">
+            <div style="width: 40%;"  *ngIf="currentAccount.id === usersWeight.userExtra?.id">
+
+            </div>
+        </ng-container>
+    </div>-->
 </div>
