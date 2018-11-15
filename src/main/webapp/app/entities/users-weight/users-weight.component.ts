@@ -83,7 +83,7 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
 
             var result = {};
             var pairDateValue = keys.map(function(x, i) {
-                return [x, values[i]];
+                return { dates: x, values: values[i] };
             });
             console.log(pairDateValue);
 
