@@ -51,7 +51,7 @@ public class UserExtra implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<UsersWeight> usersWeights = new HashSet<>();
 
-    @OneToOne @MapsId   @JoinColumn(unique = true)
+    @OneToOne @MapsId
     private User user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

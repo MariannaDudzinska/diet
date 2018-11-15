@@ -31,7 +31,7 @@ export class SessionsService {
         ].join('&');
 
         const queryUrl = `${url}${params}`;
-
+        console.log(queryUrl);
         return this.http
             .get(queryUrl)
             .pipe(
@@ -77,8 +77,22 @@ export class SessionsService {
 
         const queryUrl = `${url}${params}`;
         console.log(queryUrl);
-        this.fetchedObsFood = this.http.get(queryUrl).pipe(map(this.extractData));
+        //  this.fetchedObsFood = this.http.get(queryUrl).pipe(map(this.extractData));
 
+        //    console.log(this.fetchedObsFood);
+        // console.log(this.extractData);
+
+        this.fetchedObsFood = this.http.get(queryUrl).pipe(
+            map((response: any) => {
+                if (response.report != null) {
+                    console.log(response.report);
+                    return response.report.foods;
+                } else {
+                    console.log('No nutriens data to show');
+                }
+            })
+        );
+        console.log('went through');
         console.log(this.fetchedObsFood);
         return this.fetchedObsFood;
         /*        console.log(queryUrl);

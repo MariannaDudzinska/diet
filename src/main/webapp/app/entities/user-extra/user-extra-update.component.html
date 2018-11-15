@@ -1,7 +1,8 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-user-extra-heading">Create or edit a User Extra</h2>
+            <h2 id="jhi-user-extra-heading">Edit lifestyle data</h2>
+            <br>
             <div>
                 <jhi-alert-error></jhi-alert-error>
                 <div class="form-group" [hidden]="!userExtra.id">

@@ -52,6 +52,12 @@
                     <span>Search</span>
                 </a>
             </li>
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="users-weight">
+                    <fa-icon [icon]="'weight'" [fixedWidth]="true"></fa-icon>
+                    <span>Weight Log</span>
+                </a>
+            </li>
             <!--<li *jhiHasAnyAuthority="'ROLE_USER'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
                     <span>
@@ -118,16 +124,22 @@
                   </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu>
-                    <li>
+<!--                    <li>
                         <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'user'" [fixedWidth]="true"></fa-icon>
                             <span>User management</span>
                         </a>
-                    </li>
+                    </li>-->
                     <li>
                         <a class="dropdown-item" routerLink="admin/jhi-health" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'heart'" [fixedWidth]="true"></fa-icon>
-                            <span>Health</span>
+                            <span>Metrics</span>
+                        </a>
+                    </li>
+                    <li *ngIf="currentUser">
+                        <a class="dropdown-item" routerLink="user-extra/{{currentUser.id}}/view" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon [icon]="'user'" [fixedWidth]="true"></fa-icon>
+                            <span>My data</span>
                         </a>
                     </li>
                     <li *ngSwitchCase="true">
