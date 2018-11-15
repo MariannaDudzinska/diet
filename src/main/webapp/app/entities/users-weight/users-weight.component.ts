@@ -47,27 +47,61 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
     }
     showChart() {
         this.usersWeightService.query().subscribe((res: HttpResponse<IUsersWeight[]>) => {
-            let dates = res.body.map(res => res.dateOfLog);
+            let condition = res.body.map(res => res.userExtra.id);
+            let currId = this.currentAccount.id;
+            /*            console.log('id   ' + condition);
+            console.log('id user   ' + this.currentAccount.id);
+            condition.forEach(function(condition) {
+                if(condition == currId) {
+                    console.log( 'checks with val '+ condition );
+                } else { console.log('doesnt check with val ' + condition); }
+            });
+         let datesOfCurr = res.body.map(res =>  res.dateOfLog);*/
+
+            // ----------------------------------------------
+            let dates = res.body.map(res => {
+                if (res.userExtra.id === currId) {
+                    return res.dateOfLog;
+                } else return null;
+            });
             console.log(dates);
-            let vals = res.body.map(res => res.valueInKg);
+            let vals = res.body.map(res => {
+                if (res.userExtra.id === currId) {
+                    return res.valueInKg;
+                } else return null;
+            });
             console.log(vals);
 
-            let datesArr = [];
-            dates.forEach((res: any) => {
-                let jsdate = new Date(res._i);
-                datesArr.push(jsdate.toLocaleTimeString('en', { day: 'numeric', month: 'short' }));
+            var filtered = vals.filter(function(el) {
+                return el != null;
             });
+            console.log(filtered);
 
+            let datesArr = [];
+            //if(this.currentAccount.id == )
+            dates.forEach((res: any) => {
+                if (res != null) {
+                    let jsdate = new Date(res._i);
+                    datesArr.push(jsdate.toLocaleTimeString('en', { day: 'numeric', month: 'numeric' }));
+                }
+            });
             console.log(datesArr);
+
+            /*var keys = ['foo', 'bar', 'baz'];
+            var values = [11, 22, 33]
+
+            var result = {};
+            keys.forEach((key, i) => result[key] = values[i]);
+            console.log(result);*/
 
             this.chart = new Chart('lineCharts', {
                 type: 'bar',
                 data: {
-                    labels: datesArr.sort(),
+                    labels: datesArr,
                     datasets: [
                         {
                             label: '# kilograms',
-                            data: vals,
+                            data: filtered,
                             backgroundColor: [
                                 'rgba(54, 162, 235, 1)',
                                 'rgba(255, 99, 132, 1)',
