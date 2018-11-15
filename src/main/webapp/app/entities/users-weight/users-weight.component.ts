@@ -53,13 +53,17 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
             let dates = res.body.map(res => {
                 if (res.userExtra.id === currId) {
                     return res.dateOfLog;
-                } else return null;
+                } else {
+                    return null;
+                }
             });
-            console.log(dates);
+            // console.log(dates);
             let vals = res.body.map(res => {
                 if (res.userExtra.id === currId) {
                     return res.valueInKg;
-                } else return null;
+                } else {
+                    return null;
+                }
             });
             // console.log(vals);
 
@@ -69,32 +73,41 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
             console.log(filteredVals);
 
             let datesArr = [];
-            //if(this.currentAccount.id == )
+            // if(this.currentAccount.id == )
             dates.forEach((res: any) => {
                 if (res != null) {
                     let jsdate = new Date(res._i);
                     datesArr.push(jsdate.toLocaleTimeString('en', { day: 'numeric', month: 'numeric' }));
                 }
             });
-            console.log(datesArr);
+            // console.log(datesArr);
 
-            var keys = datesArr;
-            var values = filteredVals;
+            let keys = datesArr;
+            let values = filteredVals;
 
-            var result = {};
-            var pairDateValue = keys.map(function(x, i) {
+            let result = {};
+            let pairDateValue = keys.map(function(x, i) {
                 return { dates: x, values: values[i] };
             });
             console.log(pairDateValue);
+            let arrD = [];
+            let arrV = [];
+            for (let dateval of pairDateValue.sort()) {
+                console.log(dateval.dates);
+                arrD.push(dateval.dates);
+                arrV.push(dateval.values);
+            }
+            console.log(arrD);
+            console.log(arrV);
 
             this.chart = new Chart('lineCharts', {
                 type: 'bar',
                 data: {
-                    labels: datesArr,
+                    labels: arrD,
                     datasets: [
                         {
                             label: '# kilograms',
-                            data: filteredVals,
+                            data: arrV,
                             backgroundColor: [
                                 'rgba(54, 162, 235, 1)',
                                 'rgba(255, 99, 132, 1)',
