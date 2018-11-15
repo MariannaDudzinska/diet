@@ -49,15 +49,6 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
         this.usersWeightService.query().subscribe((res: HttpResponse<IUsersWeight[]>) => {
             let condition = res.body.map(res => res.userExtra.id);
             let currId = this.currentAccount.id;
-            /*            console.log('id   ' + condition);
-            console.log('id user   ' + this.currentAccount.id);
-            condition.forEach(function(condition) {
-                if(condition == currId) {
-                    console.log( 'checks with val '+ condition );
-                } else { console.log('doesnt check with val ' + condition); }
-            });
-         let datesOfCurr = res.body.map(res =>  res.dateOfLog);*/
-
             // ----------------------------------------------
             let dates = res.body.map(res => {
                 if (res.userExtra.id === currId) {
@@ -70,12 +61,12 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
                     return res.valueInKg;
                 } else return null;
             });
-            console.log(vals);
+            // console.log(vals);
 
-            var filtered = vals.filter(function(el) {
+            var filteredVals = vals.filter(function(el) {
                 return el != null;
             });
-            console.log(filtered);
+            console.log(filteredVals);
 
             let datesArr = [];
             //if(this.currentAccount.id == )
@@ -87,12 +78,14 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
             });
             console.log(datesArr);
 
-            /*var keys = ['foo', 'bar', 'baz'];
-            var values = [11, 22, 33]
+            var keys = datesArr;
+            var values = filteredVals;
 
             var result = {};
-            keys.forEach((key, i) => result[key] = values[i]);
-            console.log(result);*/
+            var pairDateValue = keys.map(function(x, i) {
+                return [x, values[i]];
+            });
+            console.log(pairDateValue);
 
             this.chart = new Chart('lineCharts', {
                 type: 'bar',
@@ -101,7 +94,7 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
                     datasets: [
                         {
                             label: '# kilograms',
-                            data: filtered,
+                            data: filteredVals,
                             backgroundColor: [
                                 'rgba(54, 162, 235, 1)',
                                 'rgba(255, 99, 132, 1)',
