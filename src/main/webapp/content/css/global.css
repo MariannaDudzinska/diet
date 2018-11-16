@@ -75,6 +75,15 @@ Generic styles
     background-image: url('../images/back7.jpg');
 }
 
+.mycardHome {
+    padding: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    width: 550px;
+    align: center;
+    border: #1f811f;
+    background-image: url('../images/back7.jpg');
+}
 .error {
     color: white;
     background-color: red;

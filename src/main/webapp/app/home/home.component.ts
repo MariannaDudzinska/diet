@@ -18,6 +18,7 @@ import { SearchResult } from 'app/account/sessions/session.model';
 import { Subject } from 'rxjs/internal/Subject';
 import { SessionsService } from 'app/account/sessions/sessions.service';
 import { IFood } from 'app/shared/model/food.model';
+import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'jhi-home',
@@ -30,14 +31,14 @@ export class HomeComponent implements OnInit {
 
     withRefresh = false;
     foods: SearchResult[];
-    foods$: Observable<SearchResult[]>;
+    foodList: Observable<SearchResult[]>;
     account: Account;
     modalRef: NgbModalRef;
     food: IFood;
     isSaving: boolean;
     dateOfConsumption: string;
     userextras: IUserExtra[];
-
+    private searchField: FormControl;
     private searchText$ = new Subject<string>();
     search(packageName: string) {
         this.searchText$.next(packageName);
@@ -61,12 +62,13 @@ export class HomeComponent implements OnInit {
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
-        this.foods$ = this.searchText$.pipe(
+        this.searchField = new FormControl();
+        this.foodList = this.searchField.valueChanges.pipe(
             debounceTime(250),
             distinctUntilChanged(),
             switchMap(packageName => {
                 console.log(packageName);
-                console.log(this.foods$);
+                console.log(this.foodList);
                 return this.logsService.search(packageName);
             })
         );
@@ -116,5 +118,8 @@ export class HomeComponent implements OnInit {
 
     private onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
+    }
+    trackUserExtraById(index: number, item: IUserExtra) {
+        return item.id;
     }
 }

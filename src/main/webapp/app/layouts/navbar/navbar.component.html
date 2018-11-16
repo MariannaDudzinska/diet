@@ -59,6 +59,12 @@
                 </ul>
             </li>
             <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <a class="nav-link" routerLink="food/new">
+                    <fa-icon [icon]="'plus'" [fixedWidth]="true"></fa-icon>
+                    <span>Add consumption</span>
+                </a>
+            </li>
+            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" routerLink="sessions">
                     <fa-icon [icon]="'search'" [fixedWidth]="true"></fa-icon>
                     <span>Search</span>
@@ -142,6 +148,12 @@
                             <span>User management</span>
                         </a>
                     </li>-->
+                    <li>
+                        <a class="dropdown-item" routerLink="food" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
+                            <span>Consumptions</span>
+                        </a>
+                    </li>
                     <li>
                         <a class="dropdown-item" routerLink="admin/jhi-health" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'heart'" [fixedWidth]="true"></fa-icon>

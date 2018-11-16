@@ -1,12 +1,18 @@
 <div>
     <h2 id="page-heading">
-        <span>Foods</span>
+        <span>My consuptions</span>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-food" [routerLink]="['/food/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
-            Create new Food
+            Add consuption
             </span>
         </button>
+       <span><div class="form-group">
+            <label class="form-control-label">Choose date</label>
+            <div class="d-flex">
+                <input id="choice" type="datetime-local" class="form-control" name="dateOfConsumption"/>
+            </div>
+        </div></span>
     </h2>
     <jhi-alert></jhi-alert>
     <br/>

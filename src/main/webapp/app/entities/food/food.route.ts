@@ -57,7 +57,6 @@ export const foodRoute: Routes = [
             food: FoodResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
             pageTitle: 'Foods'
         },
         canActivate: [UserRouteAccessService]
