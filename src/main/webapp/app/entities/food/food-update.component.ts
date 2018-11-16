@@ -104,4 +104,7 @@ export class FoodUpdateComponent implements OnInit {
     trackUserExtraById(index: number, item: IUserExtra) {
         return item.id;
     }
+    assign(id) {
+        console.log(id);
+    }
 }
