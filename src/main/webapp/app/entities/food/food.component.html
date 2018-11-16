@@ -8,9 +8,9 @@
             </span>
         </button>
        <span><div class="form-group">
-            <label class="form-control-label">Choose date</label>
+           <br>
             <div class="d-flex">
-                <input id="choice" type="datetime-local" class="form-control" name="dateOfConsumption"/>
+                <input id="choice" type="datetime-local" class="form-control" name="date" style="width: 200px"/>
             </div>
         </div></span>
     </h2>
@@ -20,25 +20,26 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th><span>ID</span></th>
+            <th><span>Date</span></th>
             <th><span>Name</span></th>
             <th><span>Quantity</span></th>
-            <th><span>Date Of Consumption</span></th>
-            <th><span>User Extra Food</span></th>
+           <!-- <th><span>Date Of Consumption</span></th>-->
+           <!-- <th><span>User ID</span></th>-->
             <th></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody *ngIf="currentAccount">
             <tr *ngFor="let food of foods ;trackBy: trackId">
-                <td><a [routerLink]="['/food', food.id, 'view' ]">{{food.id}}</a></td>
+                <ng-container *ngIf="food.userExtraFood?.id == currentAccount.id">
+                <!--<td><a [routerLink]="['/food', food.id, 'view' ]">{{food.id}}</a></td>-->
+                <td>{{food.dateOfConsumption | date:'medium'}}</td>
                 <td>{{food.name}}</td>
                 <td>{{food.quantity}}</td>
-                <td>{{food.dateOfConsumption | date:'medium'}}</td>
-                <td>
+                <!--<td>
                     <div *ngIf="food.userExtraFood">
-                        <a [routerLink]="['../user-extra', food.userExtraFood?.id, 'view' ]" >{{food.userExtraFood?.id}}</a>
+                        {{food.userExtraFood?.id}}
                     </div>
-                </td>
+                </td>-->
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
@@ -63,6 +64,7 @@
                         </button>
                     </div>
                 </td>
+                </ng-container>
             </tr>
             </tbody>
         </table>
