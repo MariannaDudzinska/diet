@@ -1,0 +1,50 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "contains",
+            "otherEntityName": "nutrien",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "food"
+        },
+        {
+            "relationshipName": "userExtraFood",
+            "otherEntityName": "userExtra",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "quantity",
+            "fieldType": "Double",
+            "fieldValidateRules": [
+                "required",
+                "max"
+            ],
+            "fieldValidateRulesMax": "400"
+        },
+        {
+            "fieldName": "dateOfConsumption",
+            "fieldType": "Instant",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20181116105157",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "food",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}

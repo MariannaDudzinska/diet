@@ -55,7 +55,7 @@ export class SessionsService {
                         });
                     } else {
                         console.log('No data to show2');
-                    }
+                    } console.log(items);
                 })
             );
     }

@@ -1,0 +1,66 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="Marianna Dudzinska (generated)" id="1542374749764-1">
+        <createTable tableName="food">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="foodPK"/>
+            </column>
+            <column name="date_of_consumption" type="TINYBLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_extra_food_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Marianna Dudzinska (generated)" id="1542374749764-2">
+        <createTable tableName="nutrien">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="nutrienPK"/>
+            </column>
+            <column name="gm" type="DOUBLE"/>
+            <column name="nutrient" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unit" type="VARCHAR(255)"/>
+            <column name="jhi_value" type="DOUBLE"/>
+            <column name="nutrien" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="Marianna Dudzinska (generated)" id="1542374749764-3">
+        <addColumn tableName="user_extra">
+            <column name="id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Marianna Dudzinska (generated)" id="1542374749764-4">
+        <addUniqueConstraint columnNames="user_id" constraintName="UC_USER_EXTRAUSER_ID_COL" tableName="user_extra"/>
+    </changeSet>
+    <changeSet author="Marianna Dudzinska (generated)" id="1542374749764-5">
+        <createIndex indexName="IX_user_extraPK" tableName="user_extra" unique="true">
+            <column name="id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="Marianna Dudzinska (generated)" id="1542374749764-6">
+        <addForeignKeyConstraint baseColumnNames="user_extra_food_id" baseTableName="food" constraintName="FK89kyvdgctyfgjyboesku4ya4" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="user_extra"/>
+    </changeSet>
+    <changeSet author="Marianna Dudzinska (generated)" id="1542374749764-7">
+        <addForeignKeyConstraint baseColumnNames="nutrien" baseTableName="nutrien" constraintName="FKe2ppp1s5oi4pxpey6hiumqn5d" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="food"/>
+    </changeSet>
+    <changeSet author="Marianna Dudzinska (generated)" id="1542374749764-8">
+        <dropForeignKeyConstraint baseTableName="users_weight" constraintName="FKmbj45949xwtso2m1bc5aockhx"/>
+        <addForeignKeyConstraint baseColumnNames="user_extra_id" baseTableName="users_weight" constraintName="FKmbj45949xwtso2m1bc5aockhx" referencedColumnNames="id" referencedTableName="user_extra"/>
+    </changeSet>
+    <changeSet author="Marianna Dudzinska (generated)" id="1542374749764-9">
+        <dropNotNullConstraint columnDataType="bigint" columnName="user_id" tableName="user_extra"/>
+    </changeSet>
+    <changeSet author="Marianna Dudzinska (generated)" id="1542374749764-10">
+        <dropPrimaryKey tableName="user_extra"/>
+        <addPrimaryKey columnNames="id" constraintName="user_extraPK" tableName="user_extra"/>
+    </changeSet>
+</databaseChangeLog>

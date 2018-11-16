@@ -43,6 +43,10 @@ public class CacheConfiguration {
             cm.createCache(com.marianna.engindiet.domain.UserExtra.class.getName(), jcacheConfiguration);
             cm.createCache(com.marianna.engindiet.domain.UserExtra.class.getName() + ".usersWeights", jcacheConfiguration);
             cm.createCache(com.marianna.engindiet.domain.UsersWeight.class.getName(), jcacheConfiguration);
+            cm.createCache(com.marianna.engindiet.domain.Food.class.getName(), jcacheConfiguration);
+            cm.createCache(com.marianna.engindiet.domain.Food.class.getName() + ".contains", jcacheConfiguration);
+            cm.createCache(com.marianna.engindiet.domain.Nutrien.class.getName(), jcacheConfiguration);
+            cm.createCache(com.marianna.engindiet.domain.UserExtra.class.getName() + ".foods", jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };
     }

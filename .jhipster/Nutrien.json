@@ -1,0 +1,40 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [
+        {
+            "relationshipName": "food",
+            "otherEntityName": "food",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "nutrient"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "nutrient",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "unit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "value",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "gm",
+            "fieldType": "Double"
+        }
+    ],
+    "changelogDate": "20181116110202",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "no",
+    "entityTableName": "nutrien",
+    "jpaMetamodelFiltering": false,
+    "pagination": "no"
+}

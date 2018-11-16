@@ -34,6 +34,9 @@ export class SessionsComponent implements OnInit {
                 return this.logsService.search(packageName);
             })
         );
+       /* console.log('co zwraca this foods$ ');
+        console.log(this.foods$);*/
+
     }
 
     onModal(id, name: String) {
