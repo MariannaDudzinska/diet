@@ -27,7 +27,6 @@ public class UserExtra implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
@@ -51,7 +50,7 @@ public class UserExtra implements Serializable {
     @OneToMany(mappedBy = "userExtra")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<UsersWeight> usersWeights = new HashSet<>();
-    @OneToOne    @JoinColumn(unique = true)
+    @OneToOne  @MapsId  @JoinColumn(unique = true)
     private User user;
 
     @OneToMany(mappedBy = "userExtraFood")

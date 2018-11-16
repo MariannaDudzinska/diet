@@ -46,6 +46,7 @@ public class Food implements Serializable {
     private Set<Nutrien> contains = new HashSet<>();
     @ManyToOne
     @JsonIgnoreProperties("")
+    @JoinColumn(name = "user_id")
     private UserExtra userExtraFood;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove

@@ -7,7 +7,7 @@
         Added the constraints for entity UsersWeight.
     -->
     <changeSet id="20181112221829-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="user_extra_id"
                                  baseTableName="users_weight"
                                  constraintName="fk_users_weight_user_extra_id"

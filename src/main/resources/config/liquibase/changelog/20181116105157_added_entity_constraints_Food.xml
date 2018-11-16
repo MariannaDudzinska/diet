@@ -7,11 +7,11 @@
         Added the constraints for entity Food.
     -->
     <changeSet id="20181116105157-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="user_extra_food_id"
                                  baseTableName="food"
                                  constraintName="fk_food_user_extra_food_id"
-                                 referencedColumnNames="id"
+                                 referencedColumnNames="user_id"
                                  referencedTableName="user_extra"/>
 
     </changeSet>
