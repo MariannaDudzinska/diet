@@ -16,7 +16,7 @@
         <addNotNullConstraint columnDataType="bigint" columnName="user_id" tableName="user_extra"/>
     </changeSet>
     <changeSet author="Marianna Dudzinska (generated)" id="1542147138184-6">
-        <dropPrimaryKey tableName="user_extra"/>
+       <!-- <dropPrimaryKey tableName="user_extra"/>-->
         <addPrimaryKey columnNames="user_id" constraintName="user_extraPK" tableName="user_extra"/>
     </changeSet>
 </databaseChangeLog>
