@@ -47,23 +47,5 @@ export class SessionsComponent implements OnInit {
 
     constructor(private logsService: SessionsService) {}
 
-    /* NIEWAŻNE póki co*/
-    /*  this.logsService.getFoodList().subscribe(response => (this.foodList = response));
-  console.log(JSON.stringify(this.response, null, '    '));
-  console.log(this.foodList);
-  /*
 
-  /*        Observable.fromEvent(this.input.nativeElement, 'keyup')
-            .map((e: any) => e.target.value)
-            .filter((text: string) => text.length > 1)
-            .debounceTime(250)
-            .do((query: string) => this.store.dispatch(new Actions.Search(query)))
-            .switch()
-            .subscribe();
-
-      this.logsService.getFoodListConsole().subscribe((data: any[]) => {
-      this.items = data;
-      console.log('JSON : ');
-      console.log(data);
-  });*/
 }

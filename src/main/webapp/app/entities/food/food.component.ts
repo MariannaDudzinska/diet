@@ -3,7 +3,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
-import { IFood } from 'app/shared/model/food.model';
+import { IConsumption } from 'app/shared/model/food.model';
 import { Principal } from 'app/core';
 import { FoodService } from './food.service';
 
@@ -12,7 +12,7 @@ import { FoodService } from './food.service';
     templateUrl: './food.component.html'
 })
 export class FoodComponent implements OnInit, OnDestroy {
-    foods: IFood[];
+    foods: IConsumption[];
     currentAccount: any;
     eventSubscriber: Subscription;
 
@@ -25,7 +25,7 @@ export class FoodComponent implements OnInit, OnDestroy {
 
     loadAll() {
         this.foodService.query().subscribe(
-            (res: HttpResponse<IFood[]>) => {
+            (res: HttpResponse<IConsumption[]>) => {
                 this.foods = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
@@ -44,7 +44,7 @@ export class FoodComponent implements OnInit, OnDestroy {
         this.eventManager.destroy(this.eventSubscriber);
     }
 
-    trackId(index: number, item: IFood) {
+    trackId(index: number, item: IConsumption) {
         return item.id;
     }
 

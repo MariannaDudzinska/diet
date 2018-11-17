@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/internal/Observable';
 export class SessionsService {
     apiKey: string;
     fetchedObsFood: Observable<Food>;
+    fetchedNuteiens: Observable<Food>;
     munchies = [];
     loading: Observable<Boolean>;
 

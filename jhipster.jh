@@ -1,0 +1,46 @@
+// JDL definition for application 'enginDiet' generated with command 'jhipster export-jdl'
+
+entity UserExtra {
+  weight Integer required,
+  height Integer required,
+  lifestyle STYLE required,
+  dietMode DIETMODE required
+}
+entity UsersWeight {
+  dateOfLog LocalDate required,
+  valueInKg Integer required min(30) max(400)
+}
+entity Food {
+  foodName String required,
+  foodNbdbo String required,
+  quantity Double required max(400),
+  dateOfConsumption Instant required
+}
+entity Nutrien {
+  nutrient String required,
+  unit String,
+  value Double,
+  gm Double
+}
+
+enum STYLE {
+  SITTING,
+  AVERAGE,
+  ACTIVE
+}
+
+enum DIETMODE {
+  BALANCED,
+  LOSE,
+  GAIN
+}
+
+relationship OneToOne {
+  UserExtra{user(login) required} to User
+}
+relationship OneToMany {
+  UserExtra{usersWeight} to UsersWeight{userExtra required},
+  UserExtra{food} to Food{userExtraFood},
+  Food{contains} to Nutrien{food(nutrient)}
+}
+

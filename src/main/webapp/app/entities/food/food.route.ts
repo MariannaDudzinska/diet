@@ -4,27 +4,26 @@ import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot, Routes } from '@a
 import { UserRouteAccessService } from 'app/core';
 import { Observable, of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { Food } from 'app/shared/model/food.model';
+import { Consumption, IConsumption } from 'app/shared/model/food.model';
 import { FoodService } from './food.service';
 import { FoodComponent } from './food.component';
 import { FoodDetailComponent } from './food-detail.component';
 import { FoodUpdateComponent } from './food-update.component';
 import { FoodDeletePopupComponent } from './food-delete-dialog.component';
-import { IFood } from 'app/shared/model/food.model';
 
 @Injectable({ providedIn: 'root' })
-export class FoodResolve implements Resolve<IFood> {
+export class FoodResolve implements Resolve<IConsumption> {
     constructor(private service: FoodService) {}
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Food> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IConsumption> {
         const id = route.params['id'] ? route.params['id'] : null;
         if (id) {
             return this.service.find(id).pipe(
-                filter((response: HttpResponse<Food>) => response.ok),
-                map((food: HttpResponse<Food>) => food.body)
+                filter((response: HttpResponse<Consumption>) => response.ok),
+                map((food: HttpResponse<Consumption>) => food.body)
             );
         }
-        return of(new Food());
+        return of(new Consumption());
     }
 }
 

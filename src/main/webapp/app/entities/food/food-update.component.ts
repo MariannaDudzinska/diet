@@ -6,14 +6,14 @@ import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { JhiAlertService } from 'ng-jhipster';
 
-import { IFood } from 'app/shared/model/food.model';
+import { IConsumption } from 'app/shared/model/food.model';
 import { FoodService } from './food.service';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { UserExtraService } from 'app/entities/user-extra';
 import { SearchResult } from 'app/account/sessions/session.model';
 import { Subject } from 'rxjs/internal/Subject';
 import { SessionsService } from '../../account/sessions/sessions.service';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -21,13 +21,13 @@ import { FormControl } from '@angular/forms';
     templateUrl: './food-update.component.html'
 })
 export class FoodUpdateComponent implements OnInit {
-    food: IFood;
+    consumption: IConsumption;
     isSaving: boolean;
     @ViewChild('input')
     input: ElementRef; // To select input element
 
     withRefresh = false;
-    foods: SearchResult[];
+    foods: SearchResult[] = [];
     foodList: Observable<SearchResult[]>;
     userextras: IUserExtra[];
     dateOfConsumption: string;
@@ -44,13 +44,16 @@ export class FoodUpdateComponent implements OnInit {
         private userExtraService: UserExtraService,
         private activatedRoute: ActivatedRoute,
         private logsService: SessionsService
-    ) {}
+    ) {
+        this.setFoods = this.setFoods.bind(this);
+        this.save = this.save.bind(this);
+    }
 
     ngOnInit() {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ food }) => {
-            this.food = food;
-            this.dateOfConsumption = this.food.dateOfConsumption != null ? this.food.dateOfConsumption.format(DATE_TIME_FORMAT) : null;
+            this.consumption = food;
+            this.dateOfConsumption = this.consumption.dateOfConsumption != null ? this.consumption.dateOfConsumption.format(DATE_TIME_FORMAT) : null;
         });
         this.userExtraService.query().subscribe(
             (res: HttpResponse<IUserExtra[]>) => {
@@ -62,30 +65,38 @@ export class FoodUpdateComponent implements OnInit {
         this.foodList = this.searchField.valueChanges.pipe(
             debounceTime(250),
             distinctUntilChanged(),
-            switchMap(packageName => {
-                console.log(packageName);
+            switchMap(searchPhrase => {
+                console.log(searchPhrase);
                 console.log(this.foodList);
-                return this.logsService.search(packageName);
-            })
+                return this.logsService.search(searchPhrase);
+            }),
+            map(foodList => {
+                this.setFoods(foodList);
+                return foodList;
+            }),
         );
     }
 
+    setFoods(foodList) {
+        this.foods = foodList;
+    }
     previousState() {
         window.history.back();
     }
 
     save() {
         this.isSaving = true;
-        this.food.dateOfConsumption = this.dateOfConsumption != null ? moment(this.dateOfConsumption, DATE_TIME_FORMAT) : null;
-        if (this.food.id !== undefined) {
-            this.subscribeToSaveResponse(this.foodService.update(this.food));
+        this.consumption.dateOfConsumption = this.dateOfConsumption != null ? moment(this.dateOfConsumption, DATE_TIME_FORMAT) : null;
+        this.consumption.foodNbdbo = this.foods.find(food => food.name === this.consumption.foodName).id;
+        if (this.consumption.id !== undefined) {
+            this.subscribeToSaveResponse(this.foodService.update(this.consumption));
         } else {
-            this.subscribeToSaveResponse(this.foodService.create(this.food));
+            this.subscribeToSaveResponse(this.foodService.create(this.consumption));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<HttpResponse<IFood>>) {
-        result.subscribe((res: HttpResponse<IFood>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    private subscribeToSaveResponse(result: Observable<HttpResponse<IConsumption>>) {
+        result.subscribe((res: HttpResponse<IConsumption>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess() {

@@ -1,0 +1,26 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="Marianna Dudzinska (generated)" id="1542478465555-1">
+        <addColumn tableName="nutrien">
+            <column name="nutrien" type="bigint"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="Marianna Dudzinska (generated)" id="1542478465555-2">
+        <addUniqueConstraint columnNames="user_id" constraintName="UC_USER_EXTRAUSER_ID_COL" tableName="user_extra"/>
+    </changeSet>
+    <changeSet author="Marianna Dudzinska (generated)" id="1542478465555-3">
+        <addForeignKeyConstraint baseColumnNames="nutrien" baseTableName="nutrien" constraintName="FKe2ppp1s5oi4pxpey6hiumqn5d" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="food"/>
+    </changeSet>
+    <changeSet author="Marianna Dudzinska (generated)" id="1542478465555-4">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_extra" constraintName="FKj6o22j2hl0suca5i7f77olhro" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="Marianna Dudzinska (generated)" id="1542478465555-5">
+        <addForeignKeyConstraint baseColumnNames="user_extra_id" baseTableName="users_weight" constraintName="FKmbj45949xwtso2m1bc5aockhx" deferrable="false" initiallyDeferred="false" referencedColumnNames="user_id" referencedTableName="user_extra"/>
+    </changeSet>
+    <changeSet author="Marianna Dudzinska (generated)" id="1542478465555-6">
+        <dropForeignKeyConstraint baseTableName="nutrien" constraintName="fk_nutrien_food_id"/>
+    </changeSet>
+    <changeSet author="Marianna Dudzinska (generated)" id="1542478465555-7">
+        <dropColumn columnName="food_id" tableName="nutrien"/>
+    </changeSet>
+</databaseChangeLog>

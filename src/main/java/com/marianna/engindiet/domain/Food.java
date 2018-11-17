@@ -29,8 +29,12 @@ public class Food implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "foodName", nullable = false)
+    private String foodName;
+
+    @NotNull
+    @Column(name = "foodNbdbo", nullable = false)
+    private String foodNbdbo;
 
     @NotNull
     @DecimalMax(value = "400")
@@ -58,18 +62,32 @@ public class Food implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFoodName() {
+        return foodName;
     }
 
-    public Food name(String name) {
-        this.name = name;
+    public Food foodName(String foodName) {
+        this.foodName = foodName;
         return this;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFoodName(String foodName) {
+        this.foodName = foodName;
     }
+
+    public void setFoodNbdbo(String foodNbdbo) {
+        this.foodNbdbo = foodNbdbo;
+    }
+
+    public String getFoodNbdbo() {
+        return foodNbdbo;
+    }
+
+    public Food foodNbdbo(String foodNbdbo) {
+        this.foodNbdbo = foodNbdbo;
+        return this;
+    }
+
 
     public Double getQuantity() {
         return quantity;
@@ -160,7 +178,8 @@ public class Food implements Serializable {
     public String toString() {
         return "Food{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
+            ", foodName='" + getFoodName() + "'" +
+            ", foodId='" + getFoodNbdbo() + "'" +
             ", quantity=" + getQuantity() +
             ", dateOfConsumption='" + getDateOfConsumption() + "'" +
             "}";

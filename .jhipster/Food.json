@@ -17,7 +17,14 @@
     ],
     "fields": [
         {
-            "fieldName": "name",
+            "fieldName": "foodName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "foodNbdbo",
             "fieldType": "String",
             "fieldValidateRules": [
                 "required"

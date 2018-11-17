@@ -16,6 +16,7 @@
     <include file="config/liquibase/changelog/20181112221828_added_entity_constraints_UserExtra.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181116110202_added_entity_constraints_Nutrien.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20181116105157_added_entity_constraints_Food.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20181117182532_changelog.xml" relativeToChangelogFile="false"/>
 
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

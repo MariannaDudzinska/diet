@@ -7,10 +7,10 @@ import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import { IFood } from 'app/shared/model/food.model';
+import { IConsumption} from 'app/shared/model/food.model';
 
-type EntityResponseType = HttpResponse<IFood>;
-type EntityArrayResponseType = HttpResponse<IFood[]>;
+type EntityResponseType = HttpResponse<IConsumption>;
+type EntityArrayResponseType = HttpResponse<IConsumption[]>;
 
 @Injectable({ providedIn: 'root' })
 export class FoodService {
@@ -18,30 +18,30 @@ export class FoodService {
 
     constructor(private http: HttpClient) {}
 
-    create(food: IFood): Observable<EntityResponseType> {
+    create(food: IConsumption): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(food);
         return this.http
-            .post<IFood>(this.resourceUrl, copy, { observe: 'response' })
+            .post<IConsumption>(this.resourceUrl, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
-    update(food: IFood): Observable<EntityResponseType> {
+    update(food: IConsumption): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(food);
         return this.http
-            .put<IFood>(this.resourceUrl, copy, { observe: 'response' })
+            .put<IConsumption>(this.resourceUrl, copy, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
     find(id: number): Observable<EntityResponseType> {
         return this.http
-            .get<IFood>(`${this.resourceUrl}/${id}`, { observe: 'response' })
+            .get<IConsumption>(`${this.resourceUrl}/${id}`, { observe: 'response' })
             .pipe(map((res: EntityResponseType) => this.convertDateFromServer(res)));
     }
 
     query(req?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption(req);
         return this.http
-            .get<IFood[]>(this.resourceUrl, { params: options, observe: 'response' })
+            .get<IConsumption[]>(this.resourceUrl, { params: options, observe: 'response' })
             .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
     }
 
@@ -49,8 +49,8 @@ export class FoodService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    protected convertDateFromClient(food: IFood): IFood {
-        const copy: IFood = Object.assign({}, food, {
+    protected convertDateFromClient(food: IConsumption): IConsumption {
+        const copy: IConsumption = Object.assign({}, food, {
             dateOfConsumption: food.dateOfConsumption != null && food.dateOfConsumption.isValid() ? food.dateOfConsumption.toJSON() : null
         });
         return copy;
@@ -65,7 +65,7 @@ export class FoodService {
 
     protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
         if (res.body) {
-            res.body.forEach((food: IFood) => {
+            res.body.forEach((food: IConsumption) => {
                 food.dateOfConsumption = food.dateOfConsumption != null ? moment(food.dateOfConsumption) : null;
             });
         }
