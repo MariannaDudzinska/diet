@@ -23,8 +23,11 @@
             <th><span>Date</span></th>
             <th><span>Name</span></th>
             <th><span>Quantity</span></th>
-           <!-- <th><span>Date Of Consumption</span></th>-->
-           <!-- <th><span>User ID</span></th>-->
+            <th><span>Calories</span></th>
+            <th><span>Protein</span></th>
+            <th><span>Carbs</span></th>
+            <th><span>Fats</span></th>
+            <th><span>Actions</span></th>
             <th></th>
             </tr>
             </thead>
@@ -35,6 +38,11 @@
                 <td>{{food.dateOfConsumption | date:'medium'}}</td>
                 <td>{{food.foodName}}</td>
                 <td>{{food.quantity}}</td>
+                    <td>{{food.calories}}</td>
+                    <td>{{food.protein}}</td>
+                    <td>{{food.carbs}}</td>
+                    <td>{{food.fats}}</td>
+
                 <!--<td>
                     <div *ngIf="food.userExtraFood">
                         {{food.userExtraFood?.id}}
@@ -46,13 +54,13 @@
                                 [routerLink]="['/food', food.id, 'view' ]"
                                 class="btn btn-info btn-sm">
                             <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline">View</span>
+                            <span class="d-none d-md-inline"></span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/food', food.id, 'edit']"
                                 class="btn btn-primary btn-sm">
                             <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline">Edit</span>
+                            <span class="d-none d-md-inline"></span>
                         </button>
                         <button type="submit"
                                 [routerLink]="['/', { outlets: { popup: 'food/'+ food.id + '/delete'} }]"
@@ -60,7 +68,7 @@
                                 queryParamsHandling="merge"
                                 class="btn btn-danger btn-sm">
                             <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline">Delete</span>
+                            <span class="d-none d-md-inline"></span>
                         </button>
                     </div>
                 </td>

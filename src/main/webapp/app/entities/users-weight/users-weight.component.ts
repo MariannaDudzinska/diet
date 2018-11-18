@@ -47,10 +47,10 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
     }
     showChart() {
         this.usersWeightService.query().subscribe((res: HttpResponse<IUsersWeight[]>) => {
-            let condition = res.body.map(res => res.userExtra.id);
-            let currId = this.currentAccount.id;
+            const condition = res.body.map(res => res.userExtra.id);
+            const currId = this.currentAccount.id;
             // ----------------------------------------------
-            let dates = res.body.map(res => {
+            const dates = res.body.map(res => {
                 if (res.userExtra.id === currId) {
                     return res.dateOfLog;
                 } else {
@@ -58,7 +58,7 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
                 }
             });
             // console.log(dates);
-            let vals = res.body.map(res => {
+            const vals = res.body.map(res => {
                 if (res.userExtra.id === currId) {
                     return res.valueInKg;
                 } else {
@@ -67,16 +67,16 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
             });
             // console.log(vals);
 
-            var filteredVals = vals.filter(function(el) {
+            const filteredVals = vals.filter(function(el) {
                 return el != null;
             });
             console.log(filteredVals);
 
-            let datesArr = [];
+            const datesArr = [];
             // if(this.currentAccount.id == )
             dates.forEach((res: any) => {
                 if (res != null) {
-                    let jsdate = new Date(res._i);
+                    const jsdate = new Date(res._i);
                     datesArr.push(jsdate.toLocaleTimeString('en', { day: 'numeric', month: 'numeric' }));
                 }
             });

@@ -15,6 +15,7 @@ import { Subject } from 'rxjs/internal/Subject';
 import { SessionsService } from '../../account/sessions/sessions.service';
 import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
+import { Principal } from 'app/core';
 
 @Component({
     selector: 'jhi-food-update',
@@ -30,6 +31,7 @@ export class FoodUpdateComponent implements OnInit {
     foods: SearchResult[] = [];
     foodList: Observable<SearchResult[]>;
     userextras: IUserExtra[];
+    currentAccount: any;
     dateOfConsumption: string;
     isLoading = false;
     private searchField: FormControl;
@@ -43,7 +45,8 @@ export class FoodUpdateComponent implements OnInit {
         private foodService: FoodService,
         private userExtraService: UserExtraService,
         private activatedRoute: ActivatedRoute,
-        private logsService: SessionsService
+        private logsService: SessionsService,
+        private principal: Principal
     ) {
         this.setFoods = this.setFoods.bind(this);
         this.save = this.save.bind(this);
@@ -61,6 +64,9 @@ export class FoodUpdateComponent implements OnInit {
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
+        this.principal.identity().then(account => {
+            this.currentAccount = account;
+        });
         this.searchField = new FormControl();
         this.foodList = this.searchField.valueChanges.pipe(
             debounceTime(250),
@@ -88,6 +94,7 @@ export class FoodUpdateComponent implements OnInit {
         this.isSaving = true;
         this.consumption.dateOfConsumption = this.dateOfConsumption != null ? moment(this.dateOfConsumption, DATE_TIME_FORMAT) : null;
         this.consumption.foodNbdbo = this.foods.find(food => food.name === this.consumption.foodName).id;
+       /* this.consumption.userExtraFood = this.currentAccount.id;*/
         if (this.consumption.id !== undefined) {
             this.subscribeToSaveResponse(this.foodService.update(this.consumption));
         } else {

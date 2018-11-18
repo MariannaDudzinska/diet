@@ -8,7 +8,6 @@ export interface IConsumption {
     foodName?: string;
     quantity?: number;
     dateOfConsumption?: Moment;
-    contains?: INutrien[];
     userExtraFood?: IUserExtra;
 }
 
@@ -19,7 +18,6 @@ export class Consumption implements IConsumption {
         public foodName?: string,
         public quantity?: number,
         public dateOfConsumption?: Moment,
-        public contains?: INutrien[],
         public userExtraFood?: IUserExtra
     ) {}
 }

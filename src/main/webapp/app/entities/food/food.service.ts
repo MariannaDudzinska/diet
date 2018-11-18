@@ -7,7 +7,8 @@ import { map } from 'rxjs/operators';
 
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
-import { IConsumption} from 'app/shared/model/food.model';
+import { IConsumption } from 'app/shared/model/food.model';
+import { Food, Nutrients } from 'app/account/sessions/session.model';
 
 type EntityResponseType = HttpResponse<IConsumption>;
 type EntityArrayResponseType = HttpResponse<IConsumption[]>;
@@ -15,8 +16,12 @@ type EntityArrayResponseType = HttpResponse<IConsumption[]>;
 @Injectable({ providedIn: 'root' })
 export class FoodService {
     public resourceUrl = SERVER_API_URL + 'api/foods';
+    apiKey: string;
+    fetchedNuteiens: Observable<Nutrients[]>;
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.apiKey = 'fxQVGAgTrWSsjXRsX7a0udf5ZlwGWcOCYH25z53Y';
+    }
 
     create(food: IConsumption): Observable<EntityResponseType> {
         const copy = this.convertDateFromClient(food);
@@ -70,5 +75,49 @@ export class FoodService {
             });
         }
         return res;
+    }
+
+    fetchFood(query: string): Observable<Nutrients[]> {
+        const url = 'https://api.nal.usda.gov/ndb/nutrients/?format=json&';
+        const params: string = [
+            `ndbno=${query}`,
+            `nutrients=255`, // Water
+            `nutrients=208`, // Energy
+            `nutrients=203`, // Protein
+            `nutrients=204`, // Total lipid
+            `nutrients=205`, // Carbohydrate
+            `nutrients=268`, // Energy
+            `nutrients=269`, // Sugars
+            `nutrients=291`, // Fiber
+            `api_key=${this.apiKey}`
+        ].join('&');
+
+        const queryUrl = `${url}${params}`;
+        console.log(queryUrl);
+        return this.http.get<Nutrients[]>(queryUrl)
+            .pipe(
+                map((res: any) => {
+                    console.log(res);
+                    if (res.report) {
+                        return res.report.foods[0].nutrients;
+                    } else {
+                        return null;
+                    }
+                })
+            );
+        /* return this.fetchedNuteiens;*/
+        /*.pipe(
+            map( (report: Array<any>) => {
+                if (report) {
+                    return report.map( {
+                        /!*return new Food(report.foods[0])*!/
+                        return{
+                            value: report.food[0].name;
+                            index: report.food[0].ndbno;
+                        }
+                    });
+                } else { console.log('not fetched'); }
+            })*/
+        /*);*/
     }
 }
