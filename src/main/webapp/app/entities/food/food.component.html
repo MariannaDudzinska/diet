@@ -1,6 +1,6 @@
 <div>
     <h2 id="page-heading">
-        <span>My consuptions {{dateYMD}}</span>
+        <span>My consuptions</span>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-food" [routerLink]="['/food/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
@@ -10,7 +10,7 @@
        <span><div class="form-group">
            <br>
             <div class="d-flex">
-                <input id="choice" type="date" class="form-control" name="date" style="width: 200px" [value]="dateYMD"/>
+                <input id="choice" type="date" class="form-control" name="date" style="width: 200px" [(ngModel)]="dateYMD"/>
             </div>
         </div></span>
     </h2>
@@ -32,8 +32,9 @@
             </tr>
             </thead>
             <tbody *ngIf="currentAccount">
-            <tr *ngFor="let food of foods ;trackBy: trackId">
-                <ng-container *ngIf="food.userExtraFood?.id == currentAccount.id && food.dateOfConsumption.format('YYYY-MM-DD') == dateYMD">
+            <ng-container *ngFor="let food of foods ;trackBy: trackId">
+            <tr *ngIf="food.userExtraFood?.id == currentAccount.id && food.dateOfConsumption.format('YYYY-MM-DD') == dateYMD">
+                <ng-container>
                     <!--{{ food.dateOfConsumption.format('YYYY-MM-DD')}} eguals {{ dateYMD}}-->
                 <!--<td><a [routerLink]="['/food', food.id, 'view' ]">{{food.id}}</a></td>-->
                 <td>{{food.dateOfConsumption  | date:'medium'}}</td>
@@ -75,6 +76,7 @@
                 </td>
                 </ng-container>
             </tr>
+            </ng-container>
             </tbody>
         </table>
     </div>

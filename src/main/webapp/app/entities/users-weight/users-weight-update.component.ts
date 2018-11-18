@@ -22,6 +22,8 @@ export class UsersWeightUpdateComponent implements OnInit {
     userextras: IUserExtra[];
     users: IUser[];
     currentUser: String;
+    currentDate: any;
+    dateYMDhm: any;
 
     constructor(
         private jhiAlertService: JhiAlertService,
@@ -53,6 +55,8 @@ export class UsersWeightUpdateComponent implements OnInit {
         this.principal.identity().then(account => {
             this.currentUser = account;
         });
+        this.currentDate = new Date();
+        this.dateYMDhm = this.currentDate.toISOString().substring(0, 10);
     }
 
     previousState() {
