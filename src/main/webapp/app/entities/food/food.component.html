@@ -18,6 +18,10 @@
     </h2>
     <jhi-alert></jhi-alert>
     <br/>
+    <div>
+        {{Round(fatNeed, 2)}}
+    </div>
+    <br>
     <div class="table-responsive" *ngIf="foods">
         <table class="table table-striped" id="nutrientVals">
             <thead>
@@ -42,10 +46,10 @@
                         <td>{{food.dateOfConsumption  | date:'medium'}}</td>
                         <td>{{food.foodName}}</td>
                         <td>{{food.quantity}}</td>
-                        <td class="count-me">{{food.calories}}</td>
-                        <td class="count-protein">{{food.protein}}</td>
-                        <td class="count-carbs">{{food.carbs}}</td>
-                        <td class="count-fats">{{food.fats}}</td>
+                        <td class="count-me">{{Round(food.calories,2)}}</td>
+                        <td class="count-protein">{{Round(food.protein,2)}}</td>
+                        <td class="count-carbs">{{Round(food.carbs, 2)}}</td>
+                        <td class="count-fats">{{Round(food.fats,2)}}</td>
                         <!--<td>
                            <div *ngIf="food.userExtraFood">
                                {{food.userExtraFood?.id}}
@@ -78,17 +82,30 @@
                     </ng-container>
                 </tr>
             </ng-container>
-            <tr >
-                <td>    </td>
+            <tfoot>
+            <tr bgcolor="#00ff7f">
+                <td><b>Eaten today: </b></td>
                 <td>    </td>
                 <td>  </td>
-                <td class="colsum">{{Round(sumCals() ,2)}}</td>
-                <td class="colsum">{{Round(sumProtein(),2)}}</td>
-                <td class="colsum">{{Round(sumCarbs(), 2)}}</td>
-                <td class="colsum">{{Round(sumFats(), 2)}}</td>
+                <td class="colsum">{{sumCals()}}</td>
+                <td class="colsum">{{sumProtein()}}</td>
+                <td class="colsum">{{sumCarbs()}}</td>
+                <td class="colsum">{{sumFats()}}</td>
                 <td></td>
                 <th></th>
             </tr>
+            <tr bgcolor="#b8e2d4">
+                <td><b>Left to eat: </b></td>
+                <td>    </td>
+                <td>  </td>
+                <td class="colsum">{{Round(calsNeed, 2) - sumCals()}}</td>
+                <td class="colsum">{{Round(proteinNeed, 2) - sumProtein()}}</td>
+                <td class="colsum">{{Round(carbsNeed, 2) - sumCarbs()}}</td>
+                <td class="colsum">{{-sumFats() + Round(fatNeed, 2)}}</td>
+                <td></td>
+                <th></th>
+            </tr>
+        </tfoot>
             </tbody>
         </table>
     </div>

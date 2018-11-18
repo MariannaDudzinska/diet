@@ -82,17 +82,17 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
             });
             // console.log(datesArr);
 
-            let keys = datesArr;
-            let values = filteredVals;
+            const keys = datesArr;
+            const values = filteredVals;
 
-            let result = {};
-            let pairDateValue = keys.map(function(x, i) {
+            const result = {};
+            const pairDateValue = keys.map(function(x, i) {
                 return { dates: x, values: values[i] };
             });
             console.log(pairDateValue);
-            let arrD = [];
-            let arrV = [];
-            for (let dateval of pairDateValue.sort()) {
+            const arrD = [];
+            const arrV = [];
+            for (const dateval of pairDateValue.sort()) {
                 console.log(dateval.dates);
                 arrD.push(dateval.dates);
                 arrV.push(dateval.values);

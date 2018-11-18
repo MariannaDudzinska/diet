@@ -6,15 +6,17 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { IConsumption } from 'app/shared/model/food.model';
 import { Principal } from 'app/core';
 import { FoodService } from './food.service';
+import { UserExtraService } from '../user-extra/user-extra.service';
 import { Observable } from 'rxjs/internal/Observable';
 import { Food, Nutrients } from 'app/account/sessions/session.model';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 type ConsumptionNutrient = IConsumption & {
     calories: number,
     protein: number,
     fats: number,
-    carbs: number,
-    calsSum: number
+    carbs: number
 };
 
 @Component({
@@ -25,16 +27,26 @@ export class FoodComponent implements OnInit, OnDestroy {
     foods: ConsumptionNutrient[];
     foodsNbdboFetched: Observable<Food[]>;
     currentAccount: any;
+    account: any;
     eventSubscriber: Subscription;
     currentDate: any;
     currentDateComp: any;
     dateYMD: any;
-
+    userExtra: IUserExtra;
+    calsNeed: number;
+    proteinNeed: number;
+    fatNeed: number;
+    carbsNeed: number;
+    calsUsed: number;
+    proteinUsed: number;
+    fatsUsed: number;
+    carbsUsed: number;
     constructor(
         private foodService: FoodService,
         private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
-        private principal: Principal
+        private principal: Principal,
+        private userExtraService: UserExtraService
     ) {
     }
 
@@ -47,7 +59,6 @@ export class FoodComponent implements OnInit, OnDestroy {
                         const caloriesNutrient = nutrientsArray.find(nutrient => nutrient.nutrient_id === '208');
                         const caloriesValue = Number(caloriesNutrient.value) * consumption.quantity;
                         const caloriesText = caloriesValue ? caloriesValue : 0;
-                        const caloriesSum = + caloriesText;
 
                         const proteinNutrient = nutrientsArray.find(nutrient => nutrient.nutrient_id === '203');
                         const proteinValue = Number(proteinNutrient.value) * consumption.quantity;
@@ -66,8 +77,7 @@ export class FoodComponent implements OnInit, OnDestroy {
                             calories: caloriesText,
                             protein: proteinText,
                             fats: fatsText,
-                            carbs: carbsText,
-                            calsSum: caloriesSum
+                            carbs: carbsText
                         };
                         this.foods.push(consumptionsTableRow);
                     });
@@ -81,12 +91,12 @@ export class FoodComponent implements OnInit, OnDestroy {
         this.loadAll();
         this.principal.identity().then(account => {
             this.currentAccount = account;
+            this.getCurrentUserExtra(this.currentAccount.id);
         });
         this.registerChangeInFoods();
         this.currentDateComp = new Date();
         this.currentDate = new Date();
         this.dateYMD = this.currentDate.toISOString().substring(0, 10);
-        /* this.foodsNbdboFetched = this.foodService.fetchedNuteiens(foods.foodNbdbo);*/
     }
 
     ngOnDestroy() {
@@ -101,6 +111,26 @@ export class FoodComponent implements OnInit, OnDestroy {
         this.eventSubscriber = this.eventManager.subscribe('foodListModification', response => this.loadAll());
     }
 
+    getCurrentUserExtra(userextraid) {
+        console.log(userextraid);
+        this.userExtraService.find(userextraid).subscribe(
+            (res: HttpResponse<IUserExtra>) => {
+                this.userExtra = res.body;
+                const chosenLFS = this.userExtra.lifestyle === 'SITTING' ? 1.4 : this.userExtra.lifestyle === 'AVERAGE' ? 1.6 : 1.8;
+                const caloriesCount = (665.09 + (1.85 * this.userExtra.height) + (9.58 * this.userExtra.weight) - (4.67 * 25));
+                this.calsNeed = (1.1 * caloriesCount) * chosenLFS;
+                this.proteinNeed = this.userExtra.dietMode === 'LOSE' ? (2.2 * this.userExtra.weight) : this.userExtra.dietMode === 'BALANCED' ?
+                    (2.1 * this.userExtra.weight) : (2.0 * this.userExtra.weight);
+                this.fatNeed = (0.2 * caloriesCount) / 9;
+                this.carbsNeed = (this.calsNeed - (this.fatNeed * 9) - (this.proteinNeed * 4)) / 4 ;
+                this.calsUsed = this.sumCals();
+                this.fatsUsed = this.sumFats();
+                this.carbsUsed = this.sumCarbs();
+                this.proteinUsed = this.sumCals();
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+    }
     private onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
     }
@@ -109,6 +139,7 @@ export class FoodComponent implements OnInit, OnDestroy {
         const currentTime = new Date();
         return currentTime;
     }
+
     sumCals(): number {
 
         const tds = document.getElementById('nutrientVals').getElementsByTagName('td');
@@ -116,9 +147,11 @@ export class FoodComponent implements OnInit, OnDestroy {
         for (let i = 0; i < tds.length; i++) {
             if (tds[i].className === 'count-me') {
                 sum += (tds[i].innerHTML == null) ? 0 : Number(tds[i].innerHTML);
-        }        }
-        return sum;
+            }
+        }
+        return this.Round(sum, 2);
     }
+
     sumProtein(): number {
 
         const tds = document.getElementById('nutrientVals').getElementsByTagName('td');
@@ -126,9 +159,11 @@ export class FoodComponent implements OnInit, OnDestroy {
         for (let i = 0; i < tds.length; i++) {
             if (tds[i].className === 'count-protein') {
                 sum += (tds[i].innerHTML == null) ? 0 : Number(tds[i].innerHTML);
-            }        }
-        return sum;
+            }
+        }
+        return this.Round(sum, 2);
     }
+
     sumCarbs(): number {
 
         const tds = document.getElementById('nutrientVals').getElementsByTagName('td');
@@ -136,9 +171,11 @@ export class FoodComponent implements OnInit, OnDestroy {
         for (let i = 0; i < tds.length; i++) {
             if (tds[i].className === 'count-carbs') {
                 sum += (tds[i].innerHTML == null) ? 0 : Number(tds[i].innerHTML);
-            }        }
-        return sum;
+            }
+        }
+        return this.Round(sum, 2);
     }
+
     sumFats(): number {
 
         const tds = document.getElementById('nutrientVals').getElementsByTagName('td');
@@ -148,11 +185,21 @@ export class FoodComponent implements OnInit, OnDestroy {
                 sum += (tds[i].innerHTML == null) ? 0 : (Number(tds[i].innerHTML));
             }
         }
-        return sum;
+        return this.Round(sum, 2);
     }
 
     Round(n, k) {
         const factor = Math.pow(10, k);
         return Math.round(n * factor) / factor;
+    }
+
+    countNeeds() {
+        const chosenLFS = this.userExtra.lifestyle === 'SITTING' ? 1.4 : this.userExtra.lifestyle === 'AVERAGE' ? 1.6 : 1.8;
+        const caloriesCount = 665.09 + (1.85 * this.userExtra.height) + (9.58 * this.userExtra.weight) - (4.67 * 25);
+        this.calsNeed = (1.1 * caloriesCount) * chosenLFS;
+        this.proteinNeed = this.userExtra.dietMode === 'LOSE' ? (2.2 * this.userExtra.weight) : this.userExtra.dietMode === 'BALANCED' ?
+            (2.1 * this.userExtra.weight) : (2.0 * this.userExtra.weight);
+        this.fatNeed = (0.2 * caloriesCount) / 9;
+        this.carbsNeed = this.calsNeed - (this.fatNeed * 9) - (this.proteinNeed * 4);
     }
 }
