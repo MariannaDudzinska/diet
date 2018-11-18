@@ -4,79 +4,91 @@
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-food" [routerLink]="['/food/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
-            Add consuption
-            </span>
+         Add consuption
+         </span>
         </button>
-       <span><div class="form-group">
-           <br>
+        <span>
+         <div class="form-group">
+            <br>
             <div class="d-flex">
-                <input id="choice" type="date" class="form-control" name="date" style="width: 200px" [(ngModel)]="dateYMD"/>
+               <input id="choice" type="date" class="form-control" name="date" style="width: 200px" [(ngModel)]="dateYMD"/>
             </div>
-        </div></span>
+         </div>
+      </span>
     </h2>
     <jhi-alert></jhi-alert>
     <br/>
     <div class="table-responsive" *ngIf="foods">
-        <table class="table table-striped">
+        <table class="table table-striped" id="nutrientVals">
             <thead>
             <tr>
-            <th><span>Date</span></th>
-            <th><span>Name</span></th>
-            <th><span>Quantity</span></th>
-            <th><span>Calories</span></th>
-            <th><span>Protein</span></th>
-            <th><span>Carbs</span></th>
-            <th><span>Fats</span></th>
-            <th><span>Actions</span></th>
-            <th></th>
+                <th><span>Date</span></th>
+                <th><span>Name</span></th>
+                <th><span>Quantity</span></th>
+                <th><span>Calories</span></th>
+                <th><span>Protein</span></th>
+                <th><span>Carbs</span></th>
+                <th><span>Fats</span></th>
+                <th><span>Actions</span></th>
+                <th></th>
             </tr>
             </thead>
             <tbody *ngIf="currentAccount">
             <ng-container *ngFor="let food of foods ;trackBy: trackId">
-            <tr *ngIf="food.userExtraFood?.id == currentAccount.id && food.dateOfConsumption.format('YYYY-MM-DD') == dateYMD">
-                <ng-container>
-                    <!--{{ food.dateOfConsumption.format('YYYY-MM-DD')}} eguals {{ dateYMD}}-->
-                <!--<td><a [routerLink]="['/food', food.id, 'view' ]">{{food.id}}</a></td>-->
-                <td>{{food.dateOfConsumption  | date:'medium'}}</td>
-                <td>{{food.foodName}}</td>
-                <td>{{food.quantity}}</td>
-                    <td>{{food.calories}}</td>
-                    <td>{{food.protein}}</td>
-                    <td>{{food.carbs}}</td>
-                    <td>{{food.fats}}</td>
-
-                <!--<td>
-                    <div *ngIf="food.userExtraFood">
-                        {{food.userExtraFood?.id}}
-                    </div>
-                </td>-->
-                <td class="text-right">
-                    <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
-                                [routerLink]="['/food', food.id, 'view' ]"
-                                class="btn btn-info btn-sm">
-                            <fa-icon [icon]="'eye'"></fa-icon>
-                            <span class="d-none d-md-inline"></span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/food', food.id, 'edit']"
-                                class="btn btn-primary btn-sm">
-                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                            <span class="d-none d-md-inline"></span>
-                        </button>
-                        <button type="submit"
-                                [routerLink]="['/', { outlets: { popup: 'food/'+ food.id + '/delete'} }]"
-                                replaceUrl="true"
-                                queryParamsHandling="merge"
-                                class="btn btn-danger btn-sm">
-                            <fa-icon [icon]="'times'"></fa-icon>
-                            <span class="d-none d-md-inline"></span>
-                        </button>
-                    </div>
-                </td>
-                </ng-container>
-            </tr>
+                <tr *ngIf="food.userExtraFood?.id == currentAccount.id && food.dateOfConsumption.format('YYYY-MM-DD') == dateYMD">
+                    <ng-container>
+                        <!--{{ food.dateOfConsumption.format('YYYY-MM-DD')}} eguals {{ dateYMD}}-->
+                        <!--<td><a [routerLink]="['/food', food.id, 'view' ]">{{food.id}}</a></td>-->
+                        <td>{{food.dateOfConsumption  | date:'medium'}}</td>
+                        <td>{{food.foodName}}</td>
+                        <td>{{food.quantity}}</td>
+                        <td class="count-me">{{food.calories}}</td>
+                        <td class="count-protein">{{food.protein}}</td>
+                        <td class="count-carbs">{{food.carbs}}</td>
+                        <td class="count-fats">{{food.fats}}</td>
+                        <!--<td>
+                           <div *ngIf="food.userExtraFood">
+                               {{food.userExtraFood?.id}}
+                           </div>
+                           </td>-->
+                        <td class="text-right">
+                            <div class="btn-group flex-btn-group-container">
+                                <button type="submit"
+                                        [routerLink]="['/food', food.id, 'view' ]"
+                                        class="btn btn-info btn-sm">
+                                    <fa-icon [icon]="'eye'"></fa-icon>
+                                    <span class="d-none d-md-inline"></span>
+                                </button>
+                                <button type="submit"
+                                        [routerLink]="['/food', food.id, 'edit']"
+                                        class="btn btn-primary btn-sm">
+                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                    <span class="d-none d-md-inline"></span>
+                                </button>
+                                <button type="submit"
+                                        [routerLink]="['/', { outlets: { popup: 'food/'+ food.id + '/delete'} }]"
+                                        replaceUrl="true"
+                                        queryParamsHandling="merge"
+                                        class="btn btn-danger btn-sm">
+                                    <fa-icon [icon]="'times'"></fa-icon>
+                                    <span class="d-none d-md-inline"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </ng-container>
+                </tr>
             </ng-container>
+            <tr >
+                <td>    </td>
+                <td>    </td>
+                <td>  </td>
+                <td class="colsum">{{Round(sumCals() ,2)}}</td>
+                <td class="colsum">{{Round(sumProtein(),2)}}</td>
+                <td class="colsum">{{Round(sumCarbs(), 2)}}</td>
+                <td class="colsum">{{Round(sumFats(), 2)}}</td>
+                <td></td>
+                <th></th>
+            </tr>
             </tbody>
         </table>
     </div>

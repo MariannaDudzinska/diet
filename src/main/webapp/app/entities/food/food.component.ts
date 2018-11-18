@@ -14,6 +14,7 @@ type ConsumptionNutrient = IConsumption & {
     protein: number,
     fats: number,
     carbs: number,
+    calsSum: number
 };
 
 @Component({
@@ -46,6 +47,7 @@ export class FoodComponent implements OnInit, OnDestroy {
                         const caloriesNutrient = nutrientsArray.find(nutrient => nutrient.nutrient_id === '208');
                         const caloriesValue = Number(caloriesNutrient.value) * consumption.quantity;
                         const caloriesText = caloriesValue ? caloriesValue : 0;
+                        const caloriesSum = + caloriesText;
 
                         const proteinNutrient = nutrientsArray.find(nutrient => nutrient.nutrient_id === '203');
                         const proteinValue = Number(proteinNutrient.value) * consumption.quantity;
@@ -65,6 +67,7 @@ export class FoodComponent implements OnInit, OnDestroy {
                             protein: proteinText,
                             fats: fatsText,
                             carbs: carbsText,
+                            calsSum: caloriesSum
                         };
                         this.foods.push(consumptionsTableRow);
                     });
@@ -106,5 +109,50 @@ export class FoodComponent implements OnInit, OnDestroy {
         const currentTime = new Date();
         return currentTime;
     }
+    sumCals(): number {
 
+        const tds = document.getElementById('nutrientVals').getElementsByTagName('td');
+        let sum = 0;
+        for (let i = 0; i < tds.length; i++) {
+            if (tds[i].className === 'count-me') {
+                sum += (tds[i].innerHTML == null) ? 0 : Number(tds[i].innerHTML);
+        }        }
+        return sum;
+    }
+    sumProtein(): number {
+
+        const tds = document.getElementById('nutrientVals').getElementsByTagName('td');
+        let sum = 0;
+        for (let i = 0; i < tds.length; i++) {
+            if (tds[i].className === 'count-protein') {
+                sum += (tds[i].innerHTML == null) ? 0 : Number(tds[i].innerHTML);
+            }        }
+        return sum;
+    }
+    sumCarbs(): number {
+
+        const tds = document.getElementById('nutrientVals').getElementsByTagName('td');
+        let sum = 0;
+        for (let i = 0; i < tds.length; i++) {
+            if (tds[i].className === 'count-carbs') {
+                sum += (tds[i].innerHTML == null) ? 0 : Number(tds[i].innerHTML);
+            }        }
+        return sum;
+    }
+    sumFats(): number {
+
+        const tds = document.getElementById('nutrientVals').getElementsByTagName('td');
+        let sum = 0;
+        for (let i = 0; i < tds.length; i++) {
+            if (tds[i].className === 'count-fats') {
+                sum += (tds[i].innerHTML == null) ? 0 : (Number(tds[i].innerHTML));
+            }
+        }
+        return sum;
+    }
+
+    Round(n, k) {
+        const factor = Math.pow(10, k);
+        return Math.round(n * factor) / factor;
+    }
 }
