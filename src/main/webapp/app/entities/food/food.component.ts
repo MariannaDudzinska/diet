@@ -86,7 +86,6 @@ export class FoodComponent implements OnInit, OnDestroy {
             (res: HttpErrorResponse) => this.onError(res.message)
         );
     }
-
     ngOnInit() {
         this.loadAll();
         this.principal.identity().then(account => {
