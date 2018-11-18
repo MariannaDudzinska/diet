@@ -10,10 +10,10 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Food, Nutrients } from 'app/account/sessions/session.model';
 
 type ConsumptionNutrient = IConsumption & {
-    calories: string,
-    protein: string,
-    fats: string,
-    carbs: string,
+    calories: number,
+    protein: number,
+    fats: number,
+    carbs: number,
 };
 
 @Component({
@@ -25,6 +25,9 @@ export class FoodComponent implements OnInit, OnDestroy {
     foodsNbdboFetched: Observable<Food[]>;
     currentAccount: any;
     eventSubscriber: Subscription;
+    currentDate: any;
+    currentDateComp: any;
+    dateYMD: any;
 
     constructor(
         private foodService: FoodService,
@@ -42,19 +45,19 @@ export class FoodComponent implements OnInit, OnDestroy {
                     this.foodService.fetchFood(consumption.foodNbdbo).subscribe(nutrientsArray => {
                         const caloriesNutrient = nutrientsArray.find(nutrient => nutrient.nutrient_id === '208');
                         const caloriesValue = Number(caloriesNutrient.value) * consumption.quantity;
-                        const caloriesText = caloriesValue.toString() + caloriesNutrient.unit;
+                        const caloriesText = caloriesValue ? caloriesValue : 0;
 
                         const proteinNutrient = nutrientsArray.find(nutrient => nutrient.nutrient_id === '203');
                         const proteinValue = Number(proteinNutrient.value) * consumption.quantity;
-                        const proteinText = proteinValue.toString() + proteinNutrient.unit;
+                        const proteinText = proteinValue ? proteinValue : 0;
 
                         const fatsNutrient = nutrientsArray.find(nutrient => nutrient.nutrient_id === '204');
                         const fatsValue = Number(fatsNutrient.value) * consumption.quantity;
-                        const fatsText = fatsValue.toString() + fatsNutrient.unit;
+                        const fatsText = fatsValue ? fatsValue : 0;
 
                         const carbsNutrient = nutrientsArray.find(nutrient => nutrient.nutrient_id === '205');
                         const carbsValue = Number(carbsNutrient.value) * consumption.quantity;
-                        const carbsText = carbsValue.toString() + carbsNutrient.unit;
+                        const carbsText = carbsValue ? carbsValue : 0;
 
                         const consumptionsTableRow: ConsumptionNutrient = {
                             ...consumption,
@@ -77,7 +80,9 @@ export class FoodComponent implements OnInit, OnDestroy {
             this.currentAccount = account;
         });
         this.registerChangeInFoods();
-
+        this.currentDateComp = new Date();
+        this.currentDate = new Date();
+        this.dateYMD = this.currentDate.toISOString().substring(0, 10);
         /* this.foodsNbdboFetched = this.foodService.fetchedNuteiens(foods.foodNbdbo);*/
     }
 
@@ -96,4 +101,10 @@ export class FoodComponent implements OnInit, OnDestroy {
     private onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
     }
+
+    getDateNow() {
+        const currentTime = new Date();
+        return currentTime;
+    }
+
 }

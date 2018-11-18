@@ -46,6 +46,4 @@ export class SessionsComponent implements OnInit {
     }
 
     constructor(private logsService: SessionsService) {}
-
-
 }

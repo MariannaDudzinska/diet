@@ -35,6 +35,8 @@ export class FoodUpdateComponent implements OnInit {
     dateOfConsumption: string;
     isLoading = false;
     private searchField: FormControl;
+    currentDate: any;
+    dateYMDhm: any;
 
     private searchText$ = new Subject<string>();
     search(packageName: string) {
@@ -81,6 +83,8 @@ export class FoodUpdateComponent implements OnInit {
                 return foodList;
             }),
         );
+        this.currentDate = new Date();
+        this.dateYMDhm = this.currentDate.toISOString().substring(0, 10);
     }
 
     setFoods(foodList) {
@@ -93,7 +97,8 @@ export class FoodUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         this.consumption.dateOfConsumption = this.dateOfConsumption != null ? moment(this.dateOfConsumption, DATE_TIME_FORMAT) : null;
-        this.consumption.foodNbdbo = this.foods.find(food => food.name === this.consumption.foodName).id;
+        const foodObj = this.foods.find(food => food.name === this.consumption.foodName);
+        this.consumption.foodNbdbo = foodObj.id;
        /* this.consumption.userExtraFood = this.currentAccount.id;*/
         if (this.consumption.id !== undefined) {
             this.subscribeToSaveResponse(this.foodService.update(this.consumption));

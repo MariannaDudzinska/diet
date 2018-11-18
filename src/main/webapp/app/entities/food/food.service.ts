@@ -93,11 +93,11 @@ export class FoodService {
         ].join('&');
 
         const queryUrl = `${url}${params}`;
-        console.log(queryUrl);
+        // console.log(queryUrl);
         return this.http.get<Nutrients[]>(queryUrl)
             .pipe(
                 map((res: any) => {
-                    console.log(res);
+                    /*console.log(res);*/
                     if (res.report) {
                         return res.report.foods[0].nutrients;
                     } else {
