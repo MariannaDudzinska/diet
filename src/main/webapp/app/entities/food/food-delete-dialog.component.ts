@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
-import { IFood } from 'app/shared/model/food.model';
+import { IConsumption } from 'app/shared/model/food.model';
 import { FoodService } from './food.service';
 
 @Component({
@@ -12,7 +12,7 @@ import { FoodService } from './food.service';
     templateUrl: './food-delete-dialog.component.html'
 })
 export class FoodDeleteDialogComponent {
-    food: IFood;
+    food: IConsumption;
 
     constructor(private foodService: FoodService, public activeModal: NgbActiveModal, private eventManager: JhiEventManager) {}
 

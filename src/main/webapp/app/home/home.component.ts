@@ -17,7 +17,7 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { SearchResult } from 'app/account/sessions/session.model';
 import { Subject } from 'rxjs/internal/Subject';
 import { SessionsService } from 'app/account/sessions/sessions.service';
-import { IFood } from 'app/shared/model/food.model';
+import { IConsumption } from 'app/shared/model/food.model';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
     foodList: Observable<SearchResult[]>;
     account: Account;
     modalRef: NgbModalRef;
-    food: IFood;
+    food: IConsumption;
     isSaving: boolean;
     dateOfConsumption: string;
     userextras: IUserExtra[];
@@ -103,8 +103,8 @@ export class HomeComponent implements OnInit {
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<HttpResponse<IFood>>) {
-        result.subscribe((res: HttpResponse<IFood>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    private subscribeToSaveResponse(result: Observable<HttpResponse<IConsumption>>) {
+        result.subscribe((res: HttpResponse<IConsumption>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     }
 
     private onSaveSuccess() {

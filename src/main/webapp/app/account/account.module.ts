@@ -16,9 +16,11 @@ import {
     SettingsComponent,
     accountState
 } from './';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-    imports: [EnginDietSharedModule, RouterModule.forChild(accountState), NgbModule.forRoot(), BrowserAnimationsModule],
+    imports: [EnginDietSharedModule, RouterModule.forChild(accountState), NgbModule.forRoot(), BrowserAnimationsModule, FormsModule,
+        ReactiveFormsModule],
     declarations: [
         ActivateComponent,
         RegisterComponent,

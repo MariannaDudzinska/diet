@@ -32,7 +32,7 @@ export class SessionsService {
         ].join('&');
 
         const queryUrl = `${url}${params}`;
-        console.log(queryUrl);
+      /*  console.log(queryUrl);*/
         return this.http
             .get(queryUrl)
             .pipe(
@@ -125,23 +125,4 @@ export class SessionsService {
         console.log('body:   ' + body);
         return new Food(body);
     }
-    /*
-    changeLevel(log: Log): Observable<HttpResponse<any>> {
-        return this.http.put(SERVER_API_URL + 'management/logs', log, { observe: 'response' });
-    }
-    */
-    /*
-     .map(data => {
-                console.log(data);
-                data.json().list ? data.json().list.item
-                    .map(item => {
-                        return new SearchResult(item);
-                    }): [];
-                return data;findAll(): Observable<HttpResponse<Log[]>> {
-        return this.http.get<Log[]>('https://api.nal.usda.gov/ndb/list?format=json&lt=f&sort=n&max=130&api_key=fxQVGAgTrWSsjXRsX7a0udf5ZlwGWcOCYH25z53Y',
-            { observe: 'response' });
-    }*/
-    /* getFoodListConsole() {
-        return this.http.get('https://api.nal.usda.gov/ndb/list?format=json&lt=f&sort=n&max=130&api_key=fxQVGAgTrWSsjXRsX7a0udf5ZlwGWcOCYH25z53Y');
-    }*/
 }

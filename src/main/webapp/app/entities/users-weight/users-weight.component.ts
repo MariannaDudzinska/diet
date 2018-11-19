@@ -77,7 +77,7 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
             dates.forEach((res: any) => {
                 if (res != null) {
                     const jsdate = new Date(res._i);
-                    datesArr.push(jsdate.toLocaleTimeString('en', { day: 'numeric', month: 'numeric' }));
+                    datesArr.push(jsdate.toISOString().substring(0, 10));
                 }
             });
             // console.log(datesArr);
@@ -89,10 +89,15 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
             const pairDateValue = keys.map(function(x, i) {
                 return { dates: x, values: values[i] };
             });
-            console.log(pairDateValue);
+            const sortedArrOfObj = pairDateValue.sort(function(a, b) {
+                a = a.dates;
+                b = b.dates;
+                return a > b ? 1 : a < b ? -1 : 0;
+            });
+            console.log(sortedArrOfObj);
             const arrD = [];
             const arrV = [];
-            for (const dateval of pairDateValue.sort()) {
+            for (const dateval of sortedArrOfObj) {
                 console.log(dateval.dates);
                 arrD.push(dateval.dates);
                 arrV.push(dateval.values);

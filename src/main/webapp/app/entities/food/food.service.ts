@@ -93,7 +93,7 @@ export class FoodService {
         ].join('&');
 
         const queryUrl = `${url}${params}`;
-        // console.log(queryUrl);
+        console.log(queryUrl);
         return this.http.get<Nutrients[]>(queryUrl)
             .pipe(
                 map((res: any) => {
@@ -105,19 +105,5 @@ export class FoodService {
                     }
                 })
             );
-        /* return this.fetchedNuteiens;*/
-        /*.pipe(
-            map( (report: Array<any>) => {
-                if (report) {
-                    return report.map( {
-                        /!*return new Food(report.foods[0])*!/
-                        return{
-                            value: report.food[0].name;
-                            index: report.food[0].ndbno;
-                        }
-                    });
-                } else { console.log('not fetched'); }
-            })*/
-        /*);*/
     }
 }

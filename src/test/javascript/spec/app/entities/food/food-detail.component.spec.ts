@@ -5,13 +5,13 @@ import { of } from 'rxjs';
 
 import { EnginDietTestModule } from '../../../test.module';
 import { FoodDetailComponent } from 'app/entities/food/food-detail.component';
-import { Food } from 'app/shared/model/food.model';
+import { Consumption } from 'app/shared/model/food.model';
 
 describe('Component Tests', () => {
     describe('Food Management Detail Component', () => {
         let comp: FoodDetailComponent;
         let fixture: ComponentFixture<FoodDetailComponent>;
-        const route = ({ data: of({ food: new Food(123) }) } as any) as ActivatedRoute;
+        const route = ({ data: of({ food: new Consumption(123) }) } as any) as ActivatedRoute;
 
         beforeEach(() => {
             TestBed.configureTestingModule({
@@ -33,7 +33,7 @@ describe('Component Tests', () => {
                 comp.ngOnInit();
 
                 // THEN
-                expect(comp.food).toEqual(jasmine.objectContaining({ id: 123 }));
+                expect(comp.consumption).toEqual(jasmine.objectContaining({ id: 123 }));
             });
         });
     });

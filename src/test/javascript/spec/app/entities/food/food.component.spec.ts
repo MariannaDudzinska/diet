@@ -6,7 +6,7 @@ import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { EnginDietTestModule } from '../../../test.module';
 import { FoodComponent } from 'app/entities/food/food.component';
 import { FoodService } from 'app/entities/food/food.service';
-import { Food } from 'app/shared/model/food.model';
+import { Consumption } from 'app/shared/model/food.model';
 
 describe('Component Tests', () => {
     describe('Food Management Component', () => {
@@ -34,7 +34,7 @@ describe('Component Tests', () => {
             spyOn(service, 'query').and.returnValue(
                 of(
                     new HttpResponse({
-                        body: [new Food(123)],
+                        body: [new Consumption(123)],
                         headers
                     })
                 )

@@ -6,7 +6,7 @@ import { Observable, of } from 'rxjs';
 import { EnginDietTestModule } from '../../../test.module';
 import { FoodUpdateComponent } from 'app/entities/food/food-update.component';
 import { FoodService } from 'app/entities/food/food.service';
-import { Food } from 'app/shared/model/food.model';
+import { Consumption } from 'app/shared/model/food.model';
 
 describe('Component Tests', () => {
     describe('Food Management Update Component', () => {
@@ -32,9 +32,9 @@ describe('Component Tests', () => {
                 'Should call update service on save for existing entity',
                 fakeAsync(() => {
                     // GIVEN
-                    const entity = new Food(123);
+                    const entity = new Consumption(123);
                     spyOn(service, 'update').and.returnValue(of(new HttpResponse({ body: entity })));
-                    comp.food = entity;
+                    comp.consumption = entity;
                     // WHEN
                     comp.save();
                     tick(); // simulate async
@@ -49,9 +49,9 @@ describe('Component Tests', () => {
                 'Should call create service on save for new entity',
                 fakeAsync(() => {
                     // GIVEN
-                    const entity = new Food();
+                    const entity = new Consumption();
                     spyOn(service, 'create').and.returnValue(of(new HttpResponse({ body: entity })));
-                    comp.food = entity;
+                    comp.consumption = entity;
                     // WHEN
                     comp.save();
                     tick(); // simulate async
