@@ -21,7 +21,7 @@
                 </a>
             </li>
             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+           <!-- <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
                     <span>
                         <fa-icon [icon]="'th-list'"></fa-icon>
@@ -55,21 +55,21 @@
                             <span>Nutrien</span>
                         </a>
                     </li>
-                    <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
+                    &lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;
                 </ul>
-            </li>
+            </li>-->
             <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" routerLink="food/new">
                     <fa-icon [icon]="'plus'" [fixedWidth]="true"></fa-icon>
                     <span>Add consumption</span>
                 </a>
             </li>
-            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+<!--            <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" routerLink="sessions">
                     <fa-icon [icon]="'search'" [fixedWidth]="true"></fa-icon>
                     <span>Search</span>
                 </a>
-            </li>
+            </li>-->
             <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link" routerLink="users-weight">
                     <fa-icon [icon]="'weight'" [fixedWidth]="true"></fa-icon>
@@ -154,12 +154,12 @@
                             <span>Consumptions</span>
                         </a>
                     </li>
-                    <li>
+<!--                    <li>
                         <a class="dropdown-item" routerLink="admin/jhi-health" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'heart'" [fixedWidth]="true"></fa-icon>
                             <span>Metrics</span>
                         </a>
-                    </li>
+                    </li>-->
                     <li *ngIf="currentUser">
                         <a class="dropdown-item" routerLink="user-extra/{{currentUser.id}}/view" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon [icon]="'user'" [fixedWidth]="true"></fa-icon>

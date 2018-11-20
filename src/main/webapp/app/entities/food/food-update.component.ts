@@ -97,12 +97,13 @@ export class FoodUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         this.consumption.dateOfConsumption = this.dateOfConsumption != null ? moment(this.dateOfConsumption, DATE_TIME_FORMAT) : null;
-        const foodObj = this.foods.find(food => food.name === this.consumption.foodName);
-        this.consumption.foodNbdbo = foodObj.id;
+
        /* this.consumption.userExtraFood = this.currentAccount.id;*/
         if (this.consumption.id !== undefined) {
             this.subscribeToSaveResponse(this.foodService.update(this.consumption));
         } else {
+            const foodObj = this.foods.find(food => food.name === this.consumption.foodName);
+            this.consumption.foodNbdbo = foodObj.id;
             this.subscribeToSaveResponse(this.foodService.create(this.consumption));
         }
     }

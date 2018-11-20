@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm" *ngIf="currentUser">
-            <h2 id="jhi-users-weight-heading">Weight Log {{currentUser.id}}</h2>
+            <h2 id="jhi-users-weight-heading">Weight Log</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
                 <div class="form-group" [hidden]="!usersWeight.id">

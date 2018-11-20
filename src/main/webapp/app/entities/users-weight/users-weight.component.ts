@@ -114,22 +114,22 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
                             label: '# kilograms',
                             data: arrV,
                             backgroundColor: [
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(230, 25, 75, 1)',
-                                'rgba(60, 180, 75, 1)',
-                                'rgba(245, 130, 48, 1)',
-                                'rgba(145, 30, 180, 1)',
-                                'rgba(210, 245, 60, 1)',
-                                'rgba(0, 128, 128, 1)',
-                                'rgba(128, 0, 0, 1)'
+                                'rgba(83, 243, 174, 1)',
+                                'rgba(13, 191, 114, 1)',
+                                'rgba(40, 123, 87, 1)',
+                                'rgba(55, 154, 88, 1)',
+                                'rgba(29, 180, 79, 1)',
+                                'rgba(83, 243, 174, 1)',
+                                'rgba(59, 171, 122, 1)',
+                                'rgba(40, 118, 84, 1)',
+                                'rgba(23, 68, 49, 1)',
+                                'rgba(34, 195, 125, 1)',
+                                'rgba(46, 133, 62, 1)',
+                                'rgba(95, 200, 115, 1)'
                             ],
                             fill: false,
                             lineTension: 0.2,
-                            borderWidth: 1
+                            borderWidth: 0.5
                         }
                     ]
                 },

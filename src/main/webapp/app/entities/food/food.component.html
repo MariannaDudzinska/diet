@@ -9,7 +9,6 @@
         </button>
         <span>
          <div class="form-group">
-            <br>
             <div class="d-flex">
                <input id="choice" type="date" class="form-control" name="date" style="width: 200px" [(ngModel)]="dateYMD"/>
             </div>
@@ -19,7 +18,22 @@
     <jhi-alert></jhi-alert>
     <br/>
     <br>
-    <div class="table-responsive" *ngIf="foods">
+    <ng-container  *ngIf="foods">
+    <div class="table-responsive">
+        <div class="colsum" *ngIf="sumCals()> calsNeed">
+            <h5>You have exceeded maximum amount of calories for today by {{Round((sumCals() - calsNeed), 2)}} <br>
+                To burn those we suggest sprint interval for <b>{{Round((sumCals() - calsNeed) * 0.1, 0)}}  minutes </b> <br>
+                Or do <b>{{Round((sumCals() - calsNeed) * 4, 0)}} crunches </b>
+            </h5>
+            <br><br>
+        </div>
+
+        <div>
+            <ngb-progressbar class="colsum" type="warning" height=25px value="{{sumCals()}}" max="{{calsNeed}}">CALORIES</ngb-progressbar> <br>
+            <ngb-progressbar class="colsum" height=25px value="{{sumProtein()}}" max="{{proteinNeed}}">PROTEIN</ngb-progressbar> <br>
+            <ngb-progressbar class="colsum" type="success" height=25px   value="{{sumCarbs()}}" max="{{carbsNeed}}">CARBOHYDRATES</ngb-progressbar> <br>
+            <ngb-progressbar class="colsum" height=25px value="{{sumFats()}}" max="{{fatNeed}}">FATS</ngb-progressbar>
+        </div>
         <table class="table table-striped" id="nutrientVals">
             <thead>
             <tr>
@@ -55,12 +69,6 @@
                         <td class="text-right">
                             <div class="btn-group flex-btn-group-container">
                                 <button type="submit"
-                                        [routerLink]="['/food', food.id, 'view' ]"
-                                        class="btn btn-info btn-sm">
-                                    <fa-icon [icon]="'eye'"></fa-icon>
-                                    <span class="d-none d-md-inline"></span>
-                                </button>
-                                <button type="submit"
                                         [routerLink]="['/food', food.id, 'edit']"
                                         class="btn btn-primary btn-sm">
                                     <fa-icon [icon]="'pencil-alt'"></fa-icon>
@@ -95,19 +103,20 @@
                 <td><b>Left to eat: </b></td>
                 <td>    </td>
                 <td>  </td>
-                <td class="colsum">{{Round(calsNeed, 2) - sumCals()}}</td>
-                <td class="colsum">{{Round(proteinNeed, 2) - sumProtein()}}</td>
-                <td class="colsum">{{Round(carbsNeed, 2) - sumCarbs()}}</td>
-                <td class="colsum">{{-sumFats() + Round(fatNeed, 2)}}</td>
+                <td class="colsum">{{Round(calsNeed - sumCals(), 2)}}</td>
+                <td class="colsum">{{Round(proteinNeed - sumProtein(), 2)}}</td>
+                <td class="colsum">{{Round(carbsNeed - sumCarbs(), 2) }}</td>
+                <td class="colsum">{{Round(fatNeed - sumFats(), 2)  }}</td>
                 <td></td>
                 <th></th>
             </tr>
         </tfoot>
             </tbody>
         </table>
-        <ngb-progressbar class="colsum" type="success" value="{{sumCals()}}" max="{{calsNeed}}">CALORIES</ngb-progressbar>
+        <!--<ngb-progressbar class="colsum" type="success" value="{{sumCals()}}" max="{{calsNeed}}">CALORIES</ngb-progressbar>
         <ngb-progressbar class="colsum" value="{{sumProtein()}}" max="{{proteinNeed}}">PROTEIN</ngb-progressbar>
         <ngb-progressbar class="colsum" type="success"  value="{{sumCarbs()}}" max="{{carbsNeed}}">CARBOHYDRATES</ngb-progressbar>
-        <ngb-progressbar class="colsum" value="{{sumFats()}}" max="{{fatNeed}}">FATS</ngb-progressbar>
+        <ngb-progressbar class="colsum" value="{{sumFats()}}" max="{{fatNeed}}">FATS</ngb-progressbar>-->
     </div>
+    </ng-container>
 </div>

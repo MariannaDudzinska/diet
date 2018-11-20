@@ -93,7 +93,7 @@ export class FoodService {
         ].join('&');
 
         const queryUrl = `${url}${params}`;
-        console.log(queryUrl);
+      //  console.log(queryUrl);
         return this.http.get<Nutrients[]>(queryUrl)
             .pipe(
                 map((res: any) => {
