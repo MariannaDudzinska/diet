@@ -16,6 +16,7 @@
       </span>
     </h2>
     <jhi-alert></jhi-alert>
+<!--    <ng-container>
     <table matSort (matSortChange)="sortData($event)" >
         <tr>
             <th mat-sort-header="name">Dessert (100g)</th>
@@ -33,6 +34,7 @@
             <td>{{dessert.protein}}</td>
         </tr>
     </table>
+    </ng-container>-->
     <br>
     <ng-container  *ngIf="foods">
     <div class="table-responsive">
@@ -52,17 +54,16 @@
         </div> <br>
 
 
-        <table matSort (matSortChange)="sortData($event)" matSortActive="name" matSortDirection="asc"
-               matSortDisableClear class="table table-striped" id="nutrientVals">
+        <table class="table table-striped" id="nutrientVals">
             <thead>
             <tr>
-                <th mat-sort-header="date"><span>Date</span></th>
-                <th mat-sort-header="name"><span>Name</span></th>
-                <th mat-sort-header="quantity"><span>Quantity</span></th>
-                <th mat-sort-header="calories"><span>Calories</span></th>
-                <th mat-sort-header="protein"><span>Protein</span></th>
-                <th mat-sort-header="carbs"><span>Carbs</span></th>
-                <th mat-sort-header="fat"><span>Fats</span></th>
+                <th (click)="sortTable(0)"><span>Date</span></th>
+                <th (click)="sortTable(1)"><span>Name</span></th>
+                <th (click)="sortTable(2)"><span>Quantity</span></th>
+                <th (click)="sortTableVals(3)"><span>Calories</span></th>
+                <th (click)="sortTableVals(4)"><span>Protein</span></th>
+                <th (click)="sortTableVals(5)"><span>Carbs</span></th>
+                <th (click)="sortTableVals(6)"><span>Fats</span></th>
                 <th><span>Actions</span></th>
                 <th></th>
             </tr>
@@ -73,9 +74,9 @@
                     <ng-container >
                         <!--{{ food.dateOfConsumption.format('YYYY-MM-DD')}} eguals {{ dateYMD}}-->
                         <!--<td><a [routerLink]="['/food', food.id, 'view' ]">{{food.id}}</a></td>-->
-                        <td>{{food.dateOfConsumption  | date:'yyyy-MM-dd HH:mm'}}</td>
-                        <td>{{food.foodName}}</td>
-                        <td>{{food.quantity}}</td>
+                        <td class="sortable">{{food.dateOfConsumption  | date:'yyyy-MM-dd HH:mm'}}</td>
+                        <td class="sortable">{{food.foodName}}</td>
+                        <td class="sortable">{{food.quantity}}</td>
                         <td class="count-me">{{Round(food.calories,2)}}</td>
                         <td class="count-protein">{{Round(food.protein,2)}}</td>
                         <td class="count-carbs">{{Round(food.carbs, 2)}}</td>
