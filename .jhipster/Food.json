@@ -3,12 +3,6 @@
     "clientRootFolder": "",
     "relationships": [
         {
-            "relationshipName": "contains",
-            "otherEntityName": "nutrien",
-            "relationshipType": "one-to-many",
-            "otherEntityRelationshipName": "food"
-        },
-        {
             "relationshipName": "userExtraFood",
             "otherEntityName": "userExtra",
             "relationshipType": "many-to-one",

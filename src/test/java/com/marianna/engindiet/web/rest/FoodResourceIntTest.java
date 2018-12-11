@@ -88,7 +88,8 @@ public class FoodResourceIntTest {
      */
     public static Food createEntity(EntityManager em) {
         Food food = new Food()
-            .name(DEFAULT_NAME)
+            .foodName(DEFAULT_NAME)
+            .foodNbdbo(DEFAULT_NAME)
             .quantity(DEFAULT_QUANTITY)
             .dateOfConsumption(DEFAULT_DATE_OF_CONSUMPTION);
         return food;
@@ -114,7 +115,8 @@ public class FoodResourceIntTest {
         List<Food> foodList = foodRepository.findAll();
         assertThat(foodList).hasSize(databaseSizeBeforeCreate + 1);
         Food testFood = foodList.get(foodList.size() - 1);
-        assertThat(testFood.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testFood.getFoodName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testFood.getFoodNbdbo()).isEqualTo(DEFAULT_NAME);
         assertThat(testFood.getQuantity()).isEqualTo(DEFAULT_QUANTITY);
         assertThat(testFood.getDateOfConsumption()).isEqualTo(DEFAULT_DATE_OF_CONSUMPTION);
     }
@@ -143,7 +145,7 @@ public class FoodResourceIntTest {
     public void checkNameIsRequired() throws Exception {
         int databaseSizeBeforeTest = foodRepository.findAll().size();
         // set the field null
-        food.setName(null);
+        food.setFoodName(null);
 
         // Create the Food, which fails.
 
@@ -203,7 +205,8 @@ public class FoodResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(food.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].foodName").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].foodNbdbo").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].quantity").value(hasItem(DEFAULT_QUANTITY.doubleValue())))
             .andExpect(jsonPath("$.[*].dateOfConsumption").value(hasItem(DEFAULT_DATE_OF_CONSUMPTION.toString())));
     }
@@ -219,7 +222,8 @@ public class FoodResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(food.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.foodNanme").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.foodNbdbo").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.quantity").value(DEFAULT_QUANTITY.doubleValue()))
             .andExpect(jsonPath("$.dateOfConsumption").value(DEFAULT_DATE_OF_CONSUMPTION.toString()));
     }
@@ -245,7 +249,8 @@ public class FoodResourceIntTest {
         // Disconnect from session so that the updates on updatedFood are not directly saved in db
         em.detach(updatedFood);
         updatedFood
-            .name(UPDATED_NAME)
+            .foodName(UPDATED_NAME)
+            .foodNbdbo(UPDATED_NAME)
             .quantity(UPDATED_QUANTITY)
             .dateOfConsumption(UPDATED_DATE_OF_CONSUMPTION);
 
@@ -258,7 +263,8 @@ public class FoodResourceIntTest {
         List<Food> foodList = foodRepository.findAll();
         assertThat(foodList).hasSize(databaseSizeBeforeUpdate);
         Food testFood = foodList.get(foodList.size() - 1);
-        assertThat(testFood.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testFood.getFoodName()).isEqualTo(UPDATED_NAME);
+        assertThat(testFood.getFoodNbdbo()).isEqualTo(UPDATED_NAME);
         assertThat(testFood.getQuantity()).isEqualTo(UPDATED_QUANTITY);
         assertThat(testFood.getDateOfConsumption()).isEqualTo(UPDATED_DATE_OF_CONSUMPTION);
     }

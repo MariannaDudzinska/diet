@@ -78,11 +78,6 @@ export class SessionsService {
 
         const queryUrl = `${url}${params}`;
         console.log(queryUrl);
-        //  this.fetchedObsFood = this.http.get(queryUrl).pipe(map(this.extractData));
-
-        //    console.log(this.fetchedObsFood);
-        // console.log(this.extractData);
-
         this.fetchedObsFood = this.http.get(queryUrl).pipe(
             map((response: any) => {
                 if (response.report != null) {
@@ -96,28 +91,6 @@ export class SessionsService {
         console.log('went through');
         console.log(this.fetchedObsFood);
         return this.fetchedObsFood;
-        /*        console.log(queryUrl);
-        return this.http.get('got in fetchFood ' + queryUrl).map((data: any) => {
-            console.log('got resp');
-            return data.report.foods;
-        });*/
-
-        /*(response: any) => {
-                    console.log('dupa');
-                    return response.report.foods;
-                })
-            .map((items: Array<any>) => {
-                if (items) {
-                    return items.map(item => {
-                        return {
-                            id: item.ndbno,
-                            name: item.name
-                        };
-                    });
-                } else {
-                    console.log('No data to show2');
-                }
-            });*/
     }
 
     private extractData(res: any): Food {

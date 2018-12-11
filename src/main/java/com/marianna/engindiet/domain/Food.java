@@ -45,9 +45,9 @@ public class Food implements Serializable {
     @Column(name = "date_of_consumption", nullable = false)
     private Instant dateOfConsumption;
 
-    @OneToMany(mappedBy = "food")
+   /* @OneToMany(mappedBy = "food")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Nutrien> contains = new HashSet<>();
+    private Set<Nutrien> contains = new HashSet<>();*/
     @ManyToOne
     @JsonIgnoreProperties("")
     @JoinColumn(name = "user_extra_food_id")
@@ -115,10 +115,11 @@ public class Food implements Serializable {
         this.dateOfConsumption = dateOfConsumption;
     }
 
-    public Set<Nutrien> getContains() {
+/*    public Set<Nutrien> getContains() {
         return contains;
-    }
+    }*/
 
+/*
     public Food contains(Set<Nutrien> nutriens) {
         this.contains = nutriens;
         return this;
@@ -139,6 +140,7 @@ public class Food implements Serializable {
     public void setContains(Set<Nutrien> nutriens) {
         this.contains = nutriens;
     }
+*/
 
     public UserExtra getUserExtraFood() {
         return userExtraFood;

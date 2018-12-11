@@ -3,9 +3,9 @@
     <changeSet author="Marianna Dudzinska (generated)" id="1542147138184-1">
         <addForeignKeyConstraint baseColumnNames="user_extra_id" baseTableName="users_weight" constraintName="FKmbj45949xwtso2m1bc5aockhx" deferrable="false" initiallyDeferred="false" referencedColumnNames="user_id" referencedTableName="user_extra"/>
     </changeSet>
-    <changeSet author="Marianna Dudzinska (generated)" id="1542147138184-2">
+<!--    <changeSet author="Marianna Dudzinska (generated)" id="1542147138184-2">
         <dropForeignKeyConstraint baseTableName="users_weight" constraintName="fk_users_weight_user_extra_id"/>
-    </changeSet>
+    </changeSet>-->
     <changeSet author="Marianna Dudzinska (generated)" id="1542147138184-3">
         <dropUniqueConstraint constraintName="ux_user_extra_user_id" tableName="user_extra"/>
     </changeSet>

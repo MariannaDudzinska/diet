@@ -6,11 +6,11 @@
                 <h2 id="jhi-food-heading">Consumption</h2>
                 <div>
                     <jhi-alert-error></jhi-alert-error>
-                    <div class="form-group" [hidden]="!consumption.id">
+                   <!-- <div class="form-group" [hidden]="!consumption.id">
                         <label for="id">ID</label>
                         <input type="text" class="form-control" id="id" name="id"
                                [(ngModel)]="consumption.id" readonly />
-                    </div>
+                    </div>-->
                     <div class="form-group">
                         <label class="form-control-label" for="field_name">Name</label>
                         <input type="search"
@@ -65,13 +65,6 @@
                                 This field should be a date and time.
                             </small>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="field_userExtraFood">User Extra Food</label>
-                        <select class="form-control" id="field_userExtraFood" name="userExtraFood" [(ngModel)]="consumption.userExtraFood" >
-                            <option [ngValue]="null"></option>
-                            <option [ngValue]="userExtraOption.id === consumption.userExtraFood?.id ? consumption.userExtraFood : userExtraOption" *ngFor="let userExtraOption of userextras; trackBy: trackUserExtraById">{{userExtraOption.id}}</option>
-                        </select>
                     </div>
                 </div>
                 <div>

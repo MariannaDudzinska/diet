@@ -1,6 +1,6 @@
 <div>
     <h2 id="page-heading">
-        <span>My consuptions</span>
+        <span>My consuptions</span>  <br>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-food" [routerLink]="['/food/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
@@ -16,45 +16,64 @@
       </span>
     </h2>
     <jhi-alert></jhi-alert>
-    <br/>
+    <table matSort (matSortChange)="sortData($event)" >
+        <tr>
+            <th mat-sort-header="name">Dessert (100g)</th>
+            <th mat-sort-header="calories">Calories</th>
+            <th mat-sort-header="fat">Fat (g)</th>
+            <th mat-sort-header="carbs">Carbs (g)</th>
+            <th mat-sort-header="protein">Protein (g)</th>
+        </tr>
+
+        <tr *ngFor="let dessert of sortedData">
+            <td>{{dessert.name}}</td>
+            <td>{{dessert.calories}}</td>
+            <td>{{dessert.fat}}</td>
+            <td>{{dessert.carbs}}</td>
+            <td>{{dessert.protein}}</td>
+        </tr>
+    </table>
     <br>
     <ng-container  *ngIf="foods">
     <div class="table-responsive">
         <div class="colsum" *ngIf="sumCals()> calsNeed">
             <h5>You have exceeded maximum amount of calories for today by {{Round((sumCals() - calsNeed), 2)}} <br>
                 To burn those we suggest sprint interval for <b>{{Round((sumCals() - calsNeed) * 0.1, 0)}}  minutes </b> <br>
-                Or do <b>{{Round((sumCals() - calsNeed) * 4, 0)}} crunches </b>
+                Or do <b>{{Round((sumCals() - calsNeed) * 2.5, 0)}} crunches </b>
             </h5>
             <br><br>
         </div>
 
         <div>
-            <ngb-progressbar class="colsum" type="warning" height=25px value="{{sumCals()}}" max="{{calsNeed}}">CALORIES</ngb-progressbar> <br>
+            <ngb-progressbar class="colsum" type="success" height=25px value="{{sumCals()}}" max="{{calsNeed}}">CALORIES</ngb-progressbar> <br>
             <ngb-progressbar class="colsum" height=25px value="{{sumProtein()}}" max="{{proteinNeed}}">PROTEIN</ngb-progressbar> <br>
             <ngb-progressbar class="colsum" type="success" height=25px   value="{{sumCarbs()}}" max="{{carbsNeed}}">CARBOHYDRATES</ngb-progressbar> <br>
             <ngb-progressbar class="colsum" height=25px value="{{sumFats()}}" max="{{fatNeed}}">FATS</ngb-progressbar>
-        </div>
-        <table class="table table-striped" id="nutrientVals">
+        </div> <br>
+
+
+        <table matSort (matSortChange)="sortData($event)" matSortActive="name" matSortDirection="asc"
+               matSortDisableClear class="table table-striped" id="nutrientVals">
             <thead>
             <tr>
-                <th><span>Date</span></th>
-                <th><span>Name</span></th>
-                <th><span>Quantity</span></th>
-                <th><span>Calories</span></th>
-                <th><span>Protein</span></th>
-                <th><span>Carbs</span></th>
-                <th><span>Fats</span></th>
+                <th mat-sort-header="date"><span>Date</span></th>
+                <th mat-sort-header="name"><span>Name</span></th>
+                <th mat-sort-header="quantity"><span>Quantity</span></th>
+                <th mat-sort-header="calories"><span>Calories</span></th>
+                <th mat-sort-header="protein"><span>Protein</span></th>
+                <th mat-sort-header="carbs"><span>Carbs</span></th>
+                <th mat-sort-header="fat"><span>Fats</span></th>
                 <th><span>Actions</span></th>
                 <th></th>
             </tr>
             </thead>
             <tbody *ngIf="currentAccount">
-            <ng-container *ngFor="let food of foods ;trackBy: trackId">
-                <tr *ngIf="food.userExtraFood?.id == currentAccount.id && food.dateOfConsumption.format('YYYY-MM-DD') == dateYMD">
-                    <ng-container>
+            <ng-container *ngFor="let food of foods; trackBy: trackId">
+                <tr *ngIf="food.userExtraFood?.id == currentAccount.id && food.dateOfConsumption.format('YYYY-MM-DD') == dateYMD ">
+                    <ng-container >
                         <!--{{ food.dateOfConsumption.format('YYYY-MM-DD')}} eguals {{ dateYMD}}-->
                         <!--<td><a [routerLink]="['/food', food.id, 'view' ]">{{food.id}}</a></td>-->
-                        <td>{{food.dateOfConsumption  | date:'medium'}}</td>
+                        <td>{{food.dateOfConsumption  | date:'yyyy-MM-dd HH:mm'}}</td>
                         <td>{{food.foodName}}</td>
                         <td>{{food.quantity}}</td>
                         <td class="count-me">{{Round(food.calories,2)}}</td>
@@ -119,4 +138,5 @@
         <ngb-progressbar class="colsum" value="{{sumFats()}}" max="{{fatNeed}}">FATS</ngb-progressbar>-->
     </div>
     </ng-container>
+
 </div>

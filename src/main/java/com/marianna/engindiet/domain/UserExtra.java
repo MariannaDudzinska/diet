@@ -30,10 +30,14 @@ public class UserExtra implements Serializable {
     private Long id;
 
     @NotNull
+    @Min(value = 30)
+    @Max(value = 400)
     @Column(name = "weight", nullable = false)
     private Integer weight;
 
     @NotNull
+    @Min(value = 120)
+    @Max(value = 295)
     @Column(name = "height", nullable = false)
     private Integer height;
 

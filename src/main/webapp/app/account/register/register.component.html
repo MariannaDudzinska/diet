@@ -53,7 +53,7 @@
                     <label class="form-control-label" for="weight">Weight</label>
                     <input type="text" class="form-control" [(ngModel)]="registerAccount.weight" id="weight" name="weight" #weight="ngModel" placeholder="Weight in kg e.g. 85"
                            required min="40" max="400" >
-                    <!--<div *ngIf="weight.dirty && weight.invalid">
+                    <div *ngIf="weight.dirty && weight.invalid">
                         <small class="form-text text-danger" *ngIf="weight.errors.required">
                             Your username is required.
                         </small>
@@ -65,13 +65,13 @@
                         >
                             Your username cannot be longer than 50 characters.
                         </small>
-                    </div>-->
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="height">Height</label>
                     <input type="text" class="form-control" [(ngModel)]="registerAccount.height" id="height" name="height" #height="ngModel" placeholder="Height in cm e.g. 167"
                            required min="100" max="300" >
-                    <!--<div *ngIf="height.dirty && height.invalid">
+                    <div *ngIf="height.dirty && height.invalid">
                         <small class="form-text text-danger" *ngIf="height.errors.required">
                             Your username is required.
                         </small>
@@ -83,7 +83,7 @@
                         >
                             Your username cannot be longer than 50 characters.
                         </small>
-                    </div>-->
+                    </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" >Lifestyle</label>

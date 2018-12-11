@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { RouterModule, Routes, Router } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
@@ -28,7 +29,7 @@ export class FoodUpdateComponent implements OnInit {
     input: ElementRef; // To select input element
 
     withRefresh = false;
-    foods: SearchResult[] = [];
+    foods: SearchResult[];
     foodList: Observable<SearchResult[]>;
     userextras: IUserExtra[];
     currentAccount: any;
@@ -96,9 +97,10 @@ export class FoodUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        this.consumption.dateOfConsumption = this.dateOfConsumption != null ? moment(this.dateOfConsumption, DATE_TIME_FORMAT) : null;
-
-       /* this.consumption.userExtraFood = this.currentAccount.id;*/
+        this.consumption.dateOfConsumption = this.dateOfConsumption != null ?
+            moment(this.dateOfConsumption, DATE_TIME_FORMAT) : null;
+        const loggedUserExtra = this.userextras.find(loggedUE => loggedUE.id === this.currentAccount.id);
+        this.consumption.userExtraFood = loggedUserExtra;
         if (this.consumption.id !== undefined) {
             this.subscribeToSaveResponse(this.foodService.update(this.consumption));
         } else {

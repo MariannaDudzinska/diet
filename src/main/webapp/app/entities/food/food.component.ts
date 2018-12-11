@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Food, Nutrients } from 'app/account/sessions/session.model';
 import { IUserExtra } from 'app/shared/model/user-extra.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {Sort} from '@angular/material';
 
 type ConsumptionNutrient = IConsumption & {
     calories: number,
@@ -19,12 +20,26 @@ type ConsumptionNutrient = IConsumption & {
     carbs: number
 };
 
+function compare(a: number | string, b: number | string, isAsc: boolean) {
+    return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
+}
+export interface Dessert {
+    calories: number;
+    carbs: number;
+    fat: number;
+    name: string;
+    protein: number;
+}
+
 @Component({
     selector: 'jhi-food',
-    templateUrl: './food.component.html'
+    templateUrl: './food.component.html',
+    styleUrls: ['food.css'],
 })
+
 export class FoodComponent implements OnInit, OnDestroy {
     foods: ConsumptionNutrient[];
+    sortedFoods: ConsumptionNutrient[];
     foodsNbdboFetched: Observable<Food[]>;
     currentAccount: any;
     account: any;
@@ -41,6 +56,15 @@ export class FoodComponent implements OnInit, OnDestroy {
     proteinUsed: number;
     fatsUsed: number;
     carbsUsed: number;
+    desserts: Dessert[] = [
+        {name: 'Frozen yogurt', calories: 159, fat: 6, carbs: 24, protein: 4},
+        {name: 'Ice cream sandwich', calories: 237, fat: 9, carbs: 37, protein: 4},
+        {name: 'Eclair', calories: 262, fat: 16, carbs: 24, protein: 6},
+        {name: 'Cupcake', calories: 305, fat: 4, carbs: 67, protein: 4},
+        {name: 'Gingerbread', calories: 356, fat: 16, carbs: 49, protein: 4},
+    ];
+
+    sortedData: Dessert[];
     constructor(
         private foodService: FoodService,
         private jhiAlertService: JhiAlertService,
@@ -48,6 +72,8 @@ export class FoodComponent implements OnInit, OnDestroy {
         private principal: Principal,
         private userExtraService: UserExtraService
     ) {
+        this.sortedFoods = this.foods;
+        this.sortedData = this.desserts.slice();
     }
 
     loadAll() {
@@ -115,10 +141,12 @@ export class FoodComponent implements OnInit, OnDestroy {
         this.userExtraService.find(userextraid).subscribe(
             (res: HttpResponse<IUserExtra>) => {
                 this.userExtra = res.body;
-                const chosenLFS = this.userExtra.lifestyle === 'SITTING' ? 1.4 : this.userExtra.lifestyle === 'AVERAGE' ? 1.6 : 1.8;
+                const chosenLFS = this.userExtra.lifestyle === 'SITTING' ?
+                    1.4 : this.userExtra.lifestyle === 'AVERAGE' ? 1.6 : 1.8;
                 const caloriesCount = (665.09 + (1.85 * this.userExtra.height) + (9.58 * this.userExtra.weight) - (4.67 * 25));
                 this.calsNeed = (1.1 * caloriesCount) * chosenLFS;
-                this.proteinNeed = this.userExtra.dietMode === 'LOSE' ? (2.2 * this.userExtra.weight) : this.userExtra.dietMode === 'BALANCED' ?
+                this.proteinNeed = this.userExtra.dietMode === 'LOSE' ?
+                    (2.2 * this.userExtra.weight) : this.userExtra.dietMode === 'BALANCED' ?
                     (2.1 * this.userExtra.weight) : (2.0 * this.userExtra.weight);
                 this.fatNeed = (0.2 * caloriesCount) / 9;
                 this.carbsNeed = (this.calsNeed - (this.fatNeed * 9) - (this.proteinNeed * 4)) / 4 ;
@@ -193,12 +221,55 @@ export class FoodComponent implements OnInit, OnDestroy {
     }
 
     countNeeds() {
-        const chosenLFS = this.userExtra.lifestyle === 'SITTING' ? 1.4 : this.userExtra.lifestyle === 'AVERAGE' ? 1.6 : 1.8;
+        const chosenLFS = this.userExtra.lifestyle === 'SITTING' ?
+            1.4 : this.userExtra.lifestyle === 'AVERAGE' ?
+            1.6 : 1.8;
         const caloriesCount = 665.09 + (1.85 * this.userExtra.height) + (9.58 * this.userExtra.weight) - (4.67 * 25);
         this.calsNeed = (1.1 * caloriesCount) * chosenLFS;
-        this.proteinNeed = this.userExtra.dietMode === 'LOSE' ? (2.2 * this.userExtra.weight) : this.userExtra.dietMode === 'BALANCED' ?
+        this.proteinNeed = this.userExtra.dietMode === 'LOSE' ?
+            (2.2 * this.userExtra.weight) : this.userExtra.dietMode === 'BALANCED' ?
             (2.1 * this.userExtra.weight) : (2.0 * this.userExtra.weight);
         this.fatNeed = (0.2 * caloriesCount) / 9;
         this.carbsNeed = this.calsNeed - (this.fatNeed * 9) - (this.proteinNeed * 4);
+    }
+
+    sortConsumptions(sort: Sort) {
+        const data = this.foods;
+        if (!sort.active || sort.direction === '') {
+            this.sortedFoods = data;
+            return;
+        }
+        this.sortedFoods = data.sort((a, b) => {
+            const isAsc = sort.direction === 'asc';
+            switch (sort.active) {
+                case 'name': return compare(a.foodName, b.foodName, isAsc);
+                case 'date': return compare(a.dateOfConsumption.format('yyyy-MM-dd HH:mm'), b.dateOfConsumption.format('yyyy-MM-dd HH:mm'), isAsc);
+                case 'calories': return compare(a.calories, b.calories, isAsc);
+                case 'fat': return compare(a.fats, b.fats, isAsc);
+                case 'carbs': return compare(a.carbs, b.carbs, isAsc);
+                case 'protein': return compare(a.protein, b.protein, isAsc);
+                default: return 0;
+            }
+        });
+    }
+
+    sortData(sort: Sort) {
+        const data = this.desserts.slice();
+        if (!sort.active || sort.direction === '') {
+            this.sortedData = data;
+            return;
+        }
+
+        this.sortedData = data.sort((a, b) => {
+            const isAsc = sort.direction === 'asc';
+            switch (sort.active) {
+                case 'name': return compare(a.name, b.name, isAsc);
+                case 'calories': return compare(a.calories, b.calories, isAsc);
+                case 'fat': return compare(a.fat, b.fat, isAsc);
+                case 'carbs': return compare(a.carbs, b.carbs, isAsc);
+                case 'protein': return compare(a.protein, b.protein, isAsc);
+                default: return 0;
+            }
+        });
     }
 }

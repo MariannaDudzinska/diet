@@ -37,11 +37,6 @@ public class Nutrien implements Serializable {
     @Column(name = "gm")
     private Double gm;
 
-    @ManyToOne
-    @JsonIgnoreProperties("contains")
-    @JoinColumn(name = "nutrien")
-    private Food food;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -102,20 +97,6 @@ public class Nutrien implements Serializable {
     public void setGm(Double gm) {
         this.gm = gm;
     }
-
-    public Food getFood() {
-        return food;
-    }
-
-    public Nutrien food(Food food) {
-        this.food = food;
-        return this;
-    }
-
-    public void setFood(Food food) {
-        this.food = food;
-    }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
