@@ -48,24 +48,24 @@
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                 <label class="form-control-label" for="field_userExtra">User Extra</label>
                 <select class="form-control" id="field_userExtra" name="userExtra" [(ngModel)]="usersWeight.userExtra"  required>
                     <option *ngIf="!editForm.value.userExtra" [ngValue]="null" selected></option>
                     <option [ngValue]="userExtraOption.id === usersWeight.userExtra?.id ? usersWeight.userExtra : userExtraOption" *ngFor="let userExtraOption of userextras; trackBy: trackUserExtraById">{{userExtraOption.id}}</option>
                 </select>
-                </div>
+                </div>-->
                <!-- <div class="form-group" *ngIf="usersWeight.userExtra">
                     <label class="form-control-label" for="userExtra" >User ID</label>
                     <input type="text" class="form-control" id="userExtra" name="userExtra"
                            [(ngModel)]="usersWeight.userExtra.id" readonly /> {{usersWeight.userExtra?.id}}
                 </div>-->
-                <div [hidden]="!(editForm.controls.userExtra?.dirty && editForm.controls.userExtra?.invalid)">
+               <!-- <div [hidden]="!(editForm.controls.userExtra?.dirty && editForm.controls.userExtra?.invalid)">
                     <small class="form-text text-danger"
                         [hidden]="!editForm.controls.userExtra?.errors?.required">
                         This field is required.
                     </small>
-                </div>
+                </div>-->
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

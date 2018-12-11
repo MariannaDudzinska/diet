@@ -21,7 +21,7 @@ export class UsersWeightUpdateComponent implements OnInit {
 
     userextras: IUserExtra[];
     users: IUser[];
-    currentUser: String;
+    currentUser: any;
     currentDate: any;
     dateYMDhm: any;
 
@@ -65,6 +65,8 @@ export class UsersWeightUpdateComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+        const loggedUserExtra = this.userextras.find(loggedUE => loggedUE.id === this.currentUser.id);
+        this.usersWeight.userExtra = loggedUserExtra;
         if (this.usersWeight.id !== undefined) {
             this.subscribeToSaveResponse(this.usersWeightService.update(this.usersWeight));
         } else {
