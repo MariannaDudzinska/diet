@@ -12,6 +12,7 @@ import { Observable } from 'rxjs/internal/Observable';
 export class SessionsService {
     apiKey: string;
     fetchedObsFood: Observable<Food>;
+    fetchedNuteiens: Observable<Food>;
     munchies = [];
     loading: Observable<Boolean>;
 
@@ -31,7 +32,7 @@ export class SessionsService {
         ].join('&');
 
         const queryUrl = `${url}${params}`;
-        console.log(queryUrl);
+      /*  console.log(queryUrl);*/
         return this.http
             .get(queryUrl)
             .pipe(
@@ -55,7 +56,7 @@ export class SessionsService {
                         });
                     } else {
                         console.log('No data to show2');
-                    }
+                    } console.log(items);
                 })
             );
     }
@@ -77,11 +78,6 @@ export class SessionsService {
 
         const queryUrl = `${url}${params}`;
         console.log(queryUrl);
-        //  this.fetchedObsFood = this.http.get(queryUrl).pipe(map(this.extractData));
-
-        //    console.log(this.fetchedObsFood);
-        // console.log(this.extractData);
-
         this.fetchedObsFood = this.http.get(queryUrl).pipe(
             map((response: any) => {
                 if (response.report != null) {
@@ -95,28 +91,6 @@ export class SessionsService {
         console.log('went through');
         console.log(this.fetchedObsFood);
         return this.fetchedObsFood;
-        /*        console.log(queryUrl);
-        return this.http.get('got in fetchFood ' + queryUrl).map((data: any) => {
-            console.log('got resp');
-            return data.report.foods;
-        });*/
-
-        /*(response: any) => {
-                    console.log('dupa');
-                    return response.report.foods;
-                })
-            .map((items: Array<any>) => {
-                if (items) {
-                    return items.map(item => {
-                        return {
-                            id: item.ndbno,
-                            name: item.name
-                        };
-                    });
-                } else {
-                    console.log('No data to show2');
-                }
-            });*/
     }
 
     private extractData(res: any): Food {
@@ -124,23 +98,4 @@ export class SessionsService {
         console.log('body:   ' + body);
         return new Food(body);
     }
-    /*
-    changeLevel(log: Log): Observable<HttpResponse<any>> {
-        return this.http.put(SERVER_API_URL + 'management/logs', log, { observe: 'response' });
-    }
-    */
-    /*
-     .map(data => {
-                console.log(data);
-                data.json().list ? data.json().list.item
-                    .map(item => {
-                        return new SearchResult(item);
-                    }): [];
-                return data;findAll(): Observable<HttpResponse<Log[]>> {
-        return this.http.get<Log[]>('https://api.nal.usda.gov/ndb/list?format=json&lt=f&sort=n&max=130&api_key=fxQVGAgTrWSsjXRsX7a0udf5ZlwGWcOCYH25z53Y',
-            { observe: 'response' });
-    }*/
-    /* getFoodListConsole() {
-        return this.http.get('https://api.nal.usda.gov/ndb/list?format=json&lt=f&sort=n&max=130&api_key=fxQVGAgTrWSsjXRsX7a0udf5ZlwGWcOCYH25z53Y');
-    }*/
 }

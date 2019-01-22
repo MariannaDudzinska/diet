@@ -1,15 +1,14 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-user-extra-heading">Edit lifestyle data</h2>
-            <br>
+            <h2 id="jhi-user-extra-heading">My diet info</h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!userExtra.id">
+               <!-- <div class="form-group" [hidden]="!userExtra.id">
                     <label for="id">ID</label>
                     <input type="text" class="form-control" id="id" name="id"
                         [(ngModel)]="userExtra.id" readonly />
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label class="form-control-label" for="field_weight">Weight</label>
                     <input type="number" class="form-control" name="weight" id="field_weight"
@@ -69,12 +68,23 @@
                     </div>
                 </div>
 
-                <!--<div class="form-group">
+               <!-- <div class="form-group">
                     <label class="form-control-label" for="field_user">User</label>
                     <select class="form-control" id="field_user" name="user" [(ngModel)]="userExtra.user" >
                         <option [ngValue]="null"></option>
                         <option [ngValue]="userOption.id === userExtra.user?.id ? userExtra.user : userOption" *ngFor="let userOption of users; trackBy: trackUserById">{{userOption.login}}</option>
                     </select>
+                </div>-->
+                <div class="form-group">
+                    <label class="form-control-label" for="field_cals">Cals</label>
+                    <input type="number" class="form-control" name="cals" id="field_cals"
+                           [(ngModel)]="calsNeed" required/>
+                </div>
+               <!-- <div class="form-group">
+                    <label class="form-control-label" for="field_protein">Protein</label>
+                    <input type="number" class="form-control" name="protein" id="field_protein"
+                           [(ngModel)]="proteinNeed" required/>
+
                 </div>-->
             </div>
             <div>

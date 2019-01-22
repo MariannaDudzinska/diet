@@ -47,10 +47,10 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
     }
     showChart() {
         this.usersWeightService.query().subscribe((res: HttpResponse<IUsersWeight[]>) => {
-            let condition = res.body.map(res => res.userExtra.id);
-            let currId = this.currentAccount.id;
+            const condition = res.body.map(res => res.userExtra.id);
+            const currId = this.currentAccount.id;
             // ----------------------------------------------
-            let dates = res.body.map(res => {
+            const dates = res.body.map(res => {
                 if (res.userExtra.id === currId) {
                     return res.dateOfLog;
                 } else {
@@ -58,7 +58,7 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
                 }
             });
             // console.log(dates);
-            let vals = res.body.map(res => {
+            const vals = res.body.map(res => {
                 if (res.userExtra.id === currId) {
                     return res.valueInKg;
                 } else {
@@ -67,32 +67,37 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
             });
             // console.log(vals);
 
-            var filteredVals = vals.filter(function(el) {
+            const filteredVals = vals.filter(function(el) {
                 return el != null;
             });
             console.log(filteredVals);
 
-            let datesArr = [];
+            const datesArr = [];
             // if(this.currentAccount.id == )
             dates.forEach((res: any) => {
                 if (res != null) {
-                    let jsdate = new Date(res._i);
-                    datesArr.push(jsdate.toLocaleTimeString('en', { day: 'numeric', month: 'numeric' }));
+                    const jsdate = new Date(res._i);
+                    datesArr.push(jsdate.toISOString().substring(0, 10));
                 }
             });
             // console.log(datesArr);
 
-            let keys = datesArr;
-            let values = filteredVals;
+            const keys = datesArr;
+            const values = filteredVals;
 
-            let result = {};
-            let pairDateValue = keys.map(function(x, i) {
+            const result = {};
+            const pairDateValue = keys.map(function(x, i) {
                 return { dates: x, values: values[i] };
             });
-            console.log(pairDateValue);
-            let arrD = [];
-            let arrV = [];
-            for (let dateval of pairDateValue.sort()) {
+            const sortedArrOfObj = pairDateValue.sort(function(a, b) {
+                a = a.dates;
+                b = b.dates;
+                return a > b ? 1 : a < b ? -1 : 0;
+            });
+            console.log(sortedArrOfObj);
+            const arrD = [];
+            const arrV = [];
+            for (const dateval of sortedArrOfObj) {
                 console.log(dateval.dates);
                 arrD.push(dateval.dates);
                 arrV.push(dateval.values);
@@ -109,22 +114,22 @@ export class UsersWeightComponent implements OnInit, OnDestroy {
                             label: '# kilograms',
                             data: arrV,
                             backgroundColor: [
-                                'rgba(54, 162, 235, 1)',
-                                'rgba(255, 99, 132, 1)',
-                                'rgba(255, 206, 86, 1)',
-                                'rgba(75, 192, 192, 1)',
-                                'rgba(153, 102, 255, 1)',
-                                'rgba(230, 25, 75, 1)',
-                                'rgba(60, 180, 75, 1)',
-                                'rgba(245, 130, 48, 1)',
-                                'rgba(145, 30, 180, 1)',
-                                'rgba(210, 245, 60, 1)',
-                                'rgba(0, 128, 128, 1)',
-                                'rgba(128, 0, 0, 1)'
+                                'rgba(83, 243, 174, 1)',
+                                'rgba(13, 191, 114, 1)',
+                                'rgba(40, 123, 87, 1)',
+                                'rgba(55, 154, 88, 1)',
+                                'rgba(29, 180, 79, 1)',
+                                'rgba(83, 243, 174, 1)',
+                                'rgba(59, 171, 122, 1)',
+                                'rgba(40, 118, 84, 1)',
+                                'rgba(23, 68, 49, 1)',
+                                'rgba(34, 195, 125, 1)',
+                                'rgba(46, 133, 62, 1)',
+                                'rgba(95, 200, 115, 1)'
                             ],
                             fill: false,
                             lineTension: 0.2,
-                            borderWidth: 1
+                            borderWidth: 0.5
                         }
                     ]
                 },

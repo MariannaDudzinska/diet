@@ -1,6 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ChartsModule } from 'ng2-charts';
 
 import { EnginDietSharedModule } from 'app/shared';
 import {
@@ -12,11 +11,14 @@ import {
     usersWeightRoute,
     usersWeightPopupRoute
 } from './';
+import { MatInputModule, MatPaginatorModule, MatSortModule, MatTableModule} from '@angular/material';
 
 const ENTITY_STATES = [...usersWeightRoute, ...usersWeightPopupRoute];
 
 @NgModule({
-    imports: [EnginDietSharedModule, RouterModule.forChild(ENTITY_STATES), ChartsModule],
+    imports: [EnginDietSharedModule, RouterModule.forChild(ENTITY_STATES), MatSortModule, MatInputModule,
+        MatTableModule,
+        MatPaginatorModule],
     declarations: [
         UsersWeightComponent,
         UsersWeightDetailComponent,

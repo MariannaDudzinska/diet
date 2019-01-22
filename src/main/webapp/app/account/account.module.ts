@@ -1,5 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import { EnginDietSharedModule } from 'app/shared';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -15,9 +16,11 @@ import {
     SettingsComponent,
     accountState
 } from './';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-    imports: [EnginDietSharedModule, RouterModule.forChild(accountState), NgbModule.forRoot()],
+    imports: [EnginDietSharedModule, RouterModule.forChild(accountState), NgbModule.forRoot(), BrowserAnimationsModule, FormsModule,
+        ReactiveFormsModule],
     declarations: [
         ActivateComponent,
         RegisterComponent,

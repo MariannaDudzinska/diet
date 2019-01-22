@@ -9,21 +9,24 @@
         </li>
     </ul><br>
     <ng-template #noData>No Data Available</ng-template>
-
-
 </div>
+<br>
+<!--<div class="form-group">
+    <label class="form-control-label">Name</label>
+    <input type="search"
+           class="form-control" id="chosen_food"
+           name="name" [formControl]="searchField"
+           placeholder="Enter search string" list="munchies"
+           >
+    <datalist id="munchies">
+        <option class="list-group"  *ngFor="let track of foodList | async ;  let i=index" (click)="fetchFoodData(track.id)">
+            <li class="list-group-item"
+                *ngIf="i<5">
+                <a >
+                    {{ track.name }}
+                </a>
+            </li>
+        </option>
+    </datalist>
+</div>-->
 </div>
-<!--
-<modal id="custom-modal-1">
-    <div class="modal">
-        <div class="modal-body">
-            <h1>A Custom Modal!</h1>
-            <p>
-                Home page text: <input type="text" [(ngModel)]="bodyText" />
-            </p>
-            <button (click)="closeModal('custom-modal-1');">Close</button>
-        </div>
-    </div>
-    <div class="modal-background"></div>
-</modal>
--->

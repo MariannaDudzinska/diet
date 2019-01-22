@@ -5,7 +5,11 @@ import { SearchResult, Log, Food } from './session.model';
 import { SessionsService } from './sessions.service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Subject } from 'rxjs/internal/Subject';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { IUserExtra } from 'app/shared/model/user-extra.model';
+import { FoodService } from '../../entities/food/food.service';
 
 @Component({
     selector: 'jhi-sessions',
@@ -16,9 +20,13 @@ export class SessionsComponent implements OnInit {
     input: ElementRef; // To select input element
 
     withRefresh = false;
-    foods: SearchResult[];
+    foods: SearchResult[] = [];
     foods$: Observable<SearchResult[]>;
     fetchedFood$: Observable<Food>;
+    foodList: Observable<SearchResult[]>;
+    private searchField: FormControl;
+    foodService: FoodService;
+    results: any;
 
     private searchText$ = new Subject<string>();
     search(packageName: string) {
@@ -29,38 +37,55 @@ export class SessionsComponent implements OnInit {
             debounceTime(250),
             distinctUntilChanged(),
             switchMap(packageName => {
-                console.log(packageName);
-                console.log(this.foods$);
+               /* console.log(packageName);
+                console.log(this.foods$);*/
                 return this.logsService.search(packageName);
             })
         );
+        this.searchField = new FormControl();
+        this.foodList = this.searchField.valueChanges.pipe(
+            debounceTime(250),
+            distinctUntilChanged(),
+            switchMap(searchPhrase => {
+              /*  console.log(searchPhrase);
+                console.log(this.foodList);*/
+                return this.logsService.search(searchPhrase);
+            }),
+            map(foodList => {
+                this.setFoods(foodList);
+                return foodList;
+            }),
+        );
+       /* console.log('co zwraca this foods$ ');
+        console.log(this.foods$);*/
+
+    }
+    setFoods(foodList) {
+        this.foods = foodList;
     }
 
-    onModal(id, name: String) {
-        this.fetchedFood$ = this.logsService.fetchFood(id);
-        // this.modalService.open(name);
-        return this.fetchedFood$;
+    onModal(id) {
+        this.logsService.fetchFood(id).subscribe( res => {
+            this.results = res.nutrients;
+            return this.results;
+        });
     }
 
-    constructor(private logsService: SessionsService) {}
+    constructor(private logsService: SessionsService,  foodService: FoodService) {}
 
-    /* NIEWAŻNE póki co*/
-    /*  this.logsService.getFoodList().subscribe(response => (this.foodList = response));
-  console.log(JSON.stringify(this.response, null, '    '));
-  console.log(this.foodList);
-  /*
+    fetchFoodData(id) {
+        this.foodService.fetchFood(id).subscribe( nutrientsArray => {
+            const caloriesNutrient = nutrientsArray.find(nutrient => nutrient.nutrient_id === '208');
+            const caloriesValue = Number(caloriesNutrient.value);
 
-  /*        Observable.fromEvent(this.input.nativeElement, 'keyup')
-            .map((e: any) => e.target.value)
-            .filter((text: string) => text.length > 1)
-            .debounceTime(250)
-            .do((query: string) => this.store.dispatch(new Actions.Search(query)))
-            .switch()
-            .subscribe();
+            const proteinNutrient = nutrientsArray.find(nutrient => nutrient.nutrient_id === '203');
+            const proteinValue = Number(proteinNutrient.value);
 
-      this.logsService.getFoodListConsole().subscribe((data: any[]) => {
-      this.items = data;
-      console.log('JSON : ');
-      console.log(data);
-  });*/
+            const fatsNutrient = nutrientsArray.find(nutrient => nutrient.nutrient_id === '204');
+            const fatsValue = Number(fatsNutrient.value);
+
+            const carbsNutrient = nutrientsArray.find(nutrient => nutrient.nutrient_id === '205');
+            const carbsValue = Number(carbsNutrient.value);
+        });
+    }
 }

@@ -16,6 +16,12 @@
             "otherEntityField": "login",
             "ownerSide": true,
             "otherEntityRelationshipName": "userExtra"
+        },
+        {
+            "relationshipName": "food",
+            "otherEntityName": "food",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "userExtraFood"
         }
     ],
     "fields": [

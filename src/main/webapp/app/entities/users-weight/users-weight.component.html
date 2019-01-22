@@ -1,13 +1,13 @@
 <div>
     <h2 id="page-heading">
         <span>My Weight Logs</span>
-        <canvas id="lineCharts" style="width:40%;"></canvas>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-users-weight" [routerLink]="['/users-weight/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
             New weight Log
             </span>
         </button>
+        <canvas id="lineCharts" style="width:40%;"></canvas>
     </h2>
     <jhi-alert></jhi-alert>
     <br/>
@@ -35,12 +35,12 @@
                 </td>-->
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
-                        <button type="submit"
+                       <!-- <button type="submit"
                                 [routerLink]="['/users-weight', usersWeight.id, 'view' ]"
                                 class="btn btn-info btn-sm">
                             <fa-icon [icon]="'eye'"></fa-icon>
                             <span class="d-none d-md-inline">View</span>
-                        </button>
+                        </button>-->
                         <button type="submit"
                                 [routerLink]="['/users-weight', usersWeight.id, 'edit']"
                                 class="btn btn-primary btn-sm">

@@ -1,5 +1,6 @@
 import { IUsersWeight } from 'app/shared/model//users-weight.model';
 import { IUser } from 'app/core/user/user.model';
+import { IConsumption } from 'app/shared/model//food.model';
 
 export enum STYLE {
     SITTING = 'SITTING',
@@ -21,6 +22,7 @@ export interface IUserExtra {
     dietMode?: DIETMODE;
     usersWeights?: IUsersWeight[];
     user?: IUser;
+    foods?: IConsumption[];
 }
 
 export class UserExtra implements IUserExtra {
@@ -31,6 +33,7 @@ export class UserExtra implements IUserExtra {
         public lifestyle?: STYLE,
         public dietMode?: DIETMODE,
         public usersWeights?: IUsersWeight[],
-        public user?: IUser
+        public user?: IUser,
+        public foods?: IConsumption[]
     ) {}
 }

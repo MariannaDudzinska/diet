@@ -30,10 +30,14 @@ public class UserExtra implements Serializable {
     private Long id;
 
     @NotNull
+    @Min(value = 30)
+    @Max(value = 400)
     @Column(name = "weight", nullable = false)
     private Integer weight;
 
     @NotNull
+    @Min(value = 120)
+    @Max(value = 295)
     @Column(name = "height", nullable = false)
     private Integer height;
 
@@ -50,10 +54,12 @@ public class UserExtra implements Serializable {
     @OneToMany(mappedBy = "userExtra")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<UsersWeight> usersWeights = new HashSet<>();
-
-    @OneToOne @MapsId
+    @OneToOne  @MapsId  @JoinColumn(unique = true)
     private User user;
 
+    @OneToMany(mappedBy = "userExtraFood")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Food> foods = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -152,8 +158,32 @@ public class UserExtra implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
+    public Set<Food> getFoods() {
+        return foods;
+    }
+
+    public UserExtra foods(Set<Food> foods) {
+        this.foods = foods;
+        return this;
+    }
+
+    public UserExtra addFood(Food food) {
+        this.foods.add(food);
+        food.setUserExtraFood(this);
+        return this;
+    }
+
+    public UserExtra removeFood(Food food) {
+        this.foods.remove(food);
+        food.setUserExtraFood(null);
+        return this;
+    }
+
+    public void setFoods(Set<Food> foods) {
+        this.foods = foods;
+    }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
     public boolean equals(Object o) {
